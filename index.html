@@ -4,163 +4,48 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Carnivore Coaching Hub — Crafted by Neo</title>
-  <meta name="description" content="移行食プランナー／肉食プランナーへの入口と、コーチング案内。カーニボア・ケトボア・TKDをあなたの体質・生活に最適化。">
+  <meta name="description" content="年齢・性別・BMI別 あなただけの肉食プラン。移行食プランナー・肉食プランナー・コーチング申込。">
   <style>
     :root{
-      --bg: #0e0f12;
-      --bg2:#13151a;
-      --card:#171a21;
-      --text:#e9ecf1;
-      --muted:#a7b0bf;
-      --brand:#69f0ae;
-      --brand2:#21c7b8;
-      --border:#232937;
-      --accent:#7bd3ff;
-      --badge:#232c3a;
-      --shadow: 0 6px 18px rgba(0,0,0,.35);
-      --radius:16px;
-      --radius-sm:12px;
-      --gap:18px;
-      --w-max:1080px;
+      --bg:#0e0f12; --bg2:#13151a; --card:#171a21;
+      --text:#e9ecf1; --muted:#a7b0bf; --brand:#69f0ae; --brand2:#21c7b8;
+      --border:#232937; --badge:#232c3a; --shadow:0 6px 18px rgba(0,0,0,.35);
+      --radius:16px; --radius-sm:12px; --gap:18px; --w-max:1080px;
     }
     @media (prefers-color-scheme: light){
-      :root{
-        --bg:#f7f8fb;
-        --bg2:#ffffff;
-        --card:#ffffff;
-        --text:#0e1220;
-        --muted:#5a6475;
-        --border:#e8ecf3;
-        --badge:#eef3fb;
-        --shadow: 0 6px 18px rgba(15,38,71,.10);
-      }
+      :root{--bg:#f7f8fb;--bg2:#ffffff;--card:#ffffff;--text:#0e1220;
+      --muted:#5a6475;--border:#e8ecf3;--badge:#eef3fb;
+      --shadow:0 6px 18px rgba(15,38,71,.10);}
     }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      background: radial-gradient(1200px 800px at 70% -10%, rgba(123,211,255,.12), transparent 60%),
-                  radial-gradient(1000px 600px at 0% 0%, rgba(105,240,174,.09), transparent 60%),
-                  var(--bg);
-      color:var(--text);
-      font:16px/1.65 system-ui,-apple-system,"Segoe UI",Roboto,Inter,Arial,sans-serif;
-      letter-spacing:.02em;
-    }
-    .wrap{max-width:var(--w-max); margin:0 auto; padding:28px 20px 56px}
-    header{
-      position:sticky; top:0; z-index:5;
-      backdrop-filter:saturate(1.2) blur(10px);
-      background: color-mix(in srgb, var(--bg) 88%, transparent);
-      border-bottom:1px solid var(--border);
-    }
-    .nav{max-width:var(--w-max); margin:0 auto; padding:14px 20px; display:flex; align-items:center; gap:14px}
-    .logo{
-      display:flex; align-items:center; gap:10px; text-decoration:none; color:var(--text);
-      font-weight:700; letter-spacing:.03em;
-    }
-    .logo svg{width:28px; height:28px}
-    .pill{
-      margin-left:auto; font-size:.88rem; color:var(--muted); padding:6px 10px; border:1px solid var(--border); border-radius:999px;
-    }
-
+    body{margin:0;background:var(--bg);color:var(--text);font:16px/1.65 system-ui,-apple-system,"Segoe UI",Roboto,Inter,Arial,sans-serif;letter-spacing:.02em;}
+    .wrap{max-width:var(--w-max);margin:0 auto;padding:28px 20px 56px}
+    header{position:sticky;top:0;backdrop-filter:blur(10px);background:color-mix(in srgb,var(--bg) 88%,transparent);border-bottom:1px solid var(--border);}
+    .nav{max-width:var(--w-max);margin:0 auto;padding:14px 20px;display:flex;align-items:center;gap:14px}
+    .logo{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--text);font-weight:700;}
+    .logo svg{width:28px;height:28px}
+    .pill{margin-left:auto;font-size:.88rem;color:var(--muted);padding:6px 10px;border:1px solid var(--border);border-radius:999px;}
     .hero{padding:36px 0 18px}
-    .hero h1{
-      font-size:clamp(26px, 3.6vw, 38px); line-height:1.25; margin:0 0 10px;
+    .hero h1{font-size:clamp(26px,3.6vw,38px);line-height:1.25;margin:0 0 10px;}
+    .hero p{margin:.6em 0;color:var(--muted);}
+    .btn-main{
+      display:inline-flex;align-items:center;gap:10px;
+      background:linear-gradient(135deg,var(--brand),var(--brand2));
+      color:#04221b;font-weight:800;border:none;border-radius:12px;
+      padding:14px 20px;text-decoration:none;box-shadow:0 8px 20px rgba(33,199,184,.28);
+      margin-top:10px;
     }
-    .hero p{margin:0; color:var(--muted); font-size:clamp(14px, 1.6vw, 16px)}
-    .grid{
-      display:grid; gap:var(--gap);
-      grid-template-columns: 1fr;
-      margin-top:24px;
-    }
-    @media (min-width:840px){
-      .grid{grid-template-columns: 1fr 1fr;}
-    }
-
-    .card{
-      position:relative; overflow:hidden; border-radius:var(--radius);
-      background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(0,0,0,.08)), var(--card);
-      border:1px solid var(--border);
-      box-shadow:var(--shadow);
-      min-height:220px;
-      transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
-      text-decoration:none; color:inherit; display:block;
-      isolation:isolate;
-    }
-    .card:hover{ transform: translateY(-2px); box-shadow: 0 10px 26px rgba(0,0,0,.35); border-color: color-mix(in srgb, var(--accent) 40%, var(--border)); }
-    .card .ink{
-      position:absolute; inset:0; background:
-        radial-gradient(800px 380px at 10% 0%, rgba(123,211,255,.18), transparent 60%),
-        radial-gradient(600px 300px at 90% 100%, rgba(105,240,174,.18), transparent 60%);
-      opacity:.8; z-index:0;
-    }
-    .card .body{
-      position:relative; z-index:1; padding:22px;
-      display:flex; flex-direction:column; justify-content:space-between; height:100%;
-      gap:12px;
-    }
-    .eyebrow{
-      display:inline-flex; align-items:center; gap:8px;
-      font-size:.82rem; color:var(--muted); background:var(--badge); border:1px solid var(--border);
-      padding:6px 10px; border-radius:999px;
-    }
-    .title{
-      margin:4px 0 6px; font-weight:800; letter-spacing:.01em;
-      font-size:clamp(20px, 2.6vw, 24px);
-    }
-    .subtitle{color:var(--muted); font-size:.98rem}
-    .foot-row{display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:6px}
-    .cta{
-      display:inline-flex; align-items:center; gap:10px;
-      border:1px solid var(--border); padding:10px 12px; border-radius:12px; font-weight:600;
-      background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(0,0,0,.04));
-    }
-    .cta svg{width:18px; height:18px}
-    .badge{
-      display:inline-flex; align-items:center; gap:8px; font-size:.8rem;
-      padding:6px 10px; background:var(--badge); border:1px solid var(--border); border-radius:999px; color:var(--muted);
-      white-space:nowrap;
-    }
-
-    .note{
-      margin-top:28px; padding:18px; border:1px dashed var(--border); border-radius:var(--radius-sm);
-      background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(0,0,0,.03)), var(--bg2);
-    }
-    .note strong{color:var(--text)}
-    .note p{margin:.3em 0; color:var(--muted)}
-
-    .copy{
-      margin-top:34px; background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(0,0,0,.06)), var(--bg2);
-      border:1px solid var(--border); border-radius:var(--radius); padding:24px;
-    }
-    .copy h2{margin:0 0 12px; font-size:clamp(20px, 2.6vw, 26px)}
-    .copy p{margin:.6em 0}
-    .lead{font-size:1.05rem}
-    .lead strong{font-weight:800}
-    .contact{
-      display:flex; flex-wrap:wrap; gap:12px; align-items:center; margin-top:16px
-    }
-    .btn{
-      display:inline-flex; align-items:center; gap:10px;
-      background:linear-gradient(135deg, var(--brand), var(--brand2));
-      color:#04221b; font-weight:800; border:none; border-radius:12px; padding:12px 16px; text-decoration:none;
-      box-shadow: 0 8px 20px rgba(33,199,184,.28);
-    }
-    .btn svg{width:18px; height:18px}
-    .mail{
-      display:inline-flex; align-items:center; gap:10px; padding:10px 12px; border-radius:12px;
-      border:1px solid var(--border); background:var(--card); color:var(--text); text-decoration:none;
-    }
-    footer{margin-top:40px; padding-top:20px; border-top:1px solid var(--border); color:var(--muted); font-size:.9rem}
-    .en{opacity:.85; font-weight:600; letter-spacing:.02em}
-    .sep{opacity:.25; padding:0 .3em}
+    .btn-main svg{width:18px;height:18px}
+    .section{margin-top:40px;padding:24px;border:1px solid var(--border);border-radius:var(--radius);background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(0,0,0,.03)),var(--bg2);}
+    .section h2{margin:0 0 12px;font-size:clamp(20px,2.6vw,26px)}
+    .section p{margin:.6em 0;color:var(--muted);}
+    .footer{margin-top:40px;padding-top:20px;border-top:1px solid var(--border);color:var(--muted);font-size:.9rem;text-align:center}
   </style>
 </head>
 <body>
   <header>
     <div class="nav">
       <a class="logo" href="#">
-        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12a8 8 0 1 0 16 0" stroke="currentColor" stroke-width="1.5"/><path d="M8 12a4 4 0 1 0 8 0" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/></svg>
+        <svg viewBox="0 0 24 24" fill="none"><path d="M4 12a8 8 0 1 0 16 0" stroke="currentColor" stroke-width="1.5"/><path d="M8 12a4 4 0 1 0 8 0" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/></svg>
         <span>Carnivore Coaching Hub</span>
       </a>
       <span class="pill">Crafted by Neo</span>
@@ -169,99 +54,46 @@
 
   <main class="wrap">
     <section class="hero">
-      <h1>あなたの体質と生活に“噛み合う”肉食設計。</h1>
-      <p>移行期のつまずきを防ぎ、最短で静かに適応へ。目的に応じて、カーニボア／ケトボア／TKDを最適化します。</p>
+      <h1>年齢・性別・BMI別 あなただけの肉食プラン</h1>
+      <p>
+        お菓子やスイーツが与える“快感”はせいぜい数秒から数分で消えてしまいますが、<br>
+        カーニボアによって得られる精神的なエネルギー感の向上は、一日を通して“穏やかに、しかし確実に”作用し続けます。<br><br>
+        前者が「一瞬だけ弾ける最高出力の上昇」なら、後者は「日常そのものを底上げしてくれる最低出力の向上」です。<br><br>
+        多くの人にこの感覚を感じてほしいと思ってます。<br><br>
+        また、この食事法は僕が思いつきで勝手に作ったものではありません。すでに医学的根拠が検証されていて、欧州や豪州の医師や医学博士らによって多くの人が実践している“確立された食事法”です。<br>
+        僕は彼らの知恵と情報を届ける単なる橋渡し役です。
+      </p>
     </section>
 
-    <section class="grid" aria-label="プランナーへの入口">
-      <!-- Adaptation / 移行食 -->
-      <a class="card" href="https://example.com/adaptation" target="_blank" rel="noopener noreferrer" title="移行食プランナーへ">
-        <!-- TODO: ↑ あなたの『Adaptation Planner, Crafted by Neo』のURLに変更 -->
-        <div class="ink" aria-hidden="true"></div>
-        <div class="body">
-          <div>
-            <span class="eyebrow">移行期の“橋渡し”設計</span>
-            <h3 class="title">移行食プランナー</h3>
-            <p class="subtitle">
-              いきなり肉食に切り替える前の段階を戦略化。<br/>
-              離脱症状や体調不良を最小化し、静かに適応へ導きます。
-              <span class="sep">/</span>
-              <span class="en">Adaptation Planner, Crafted by Neo</span>
-            </p>
-          </div>
-          <div class="foot-row">
-            <span class="badge">公開版は一部数値をマスク</span>
-            <span class="cta">開く
-              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 17L17 7M17 7H9M17 7v8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-            </span>
-          </div>
-        </div>
-      </a>
-
-      <!-- Carnivore / 肉食 -->
-      <a class="card" href="https://example.com/carnivore" target="_blank" rel="noopener noreferrer" title="肉食プランナーへ">
-        <!-- TODO: ↑ あなたの『Carnivore Planner, Crafted by Neo』のURLに変更 -->
-        <div class="ink" aria-hidden="true"></div>
-        <div class="body">
-          <div>
-            <span class="eyebrow">適応後の“最適解”提示</span>
-            <h3 class="title">肉食プランナー</h3>
-            <p class="subtitle">
-              移行期を終えたら、<b>カーニボア／ケトボア／TKD</b>の3スタイルから選択。<br/>
-              目的と生活に合わせて、実行可能な設計を提示します。
-              <span class="sep">/</span>
-              <span class="en">Carnivore Planner, Crafted by Neo</span>
-            </p>
-          </div>
-          <div class="foot-row">
-            <span class="badge">公開版は一部数値をマスク</span>
-            <span class="cta">開く
-              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 17L17 7M17 7H9M17 7v8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-            </span>
-          </div>
-        </div>
+    <section class="section">
+      <h2>移行食プランナー</h2>
+      <p>
+        カーニボアを始める前に、安全に体を慣らすための“移行期”専用ツールです。<br>
+        今の食事から数週間かけて糖質を少しずつ減らし、不調を最小限に抑えつつスムーズに肉食へ移行するための食事計画が立てられます。
+      </p>
+      <a class="btn-main" href="https://example.com/adaptation" target="_blank">移行食プランナーを開く
+        <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H9M17 7v8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
       </a>
     </section>
 
-    <section class="note" aria-label="公開版の数値について">
-      <p><strong>表示数値について：</strong> 各プランナーの<strong>公開版では主要指標の数値を伏せています</strong>。<br/>
-      <strong>コーチング時には全数値を解放</strong>し、あなたの体質・生活に合わせて運用手順まで落とし込みます。疑問・質問は<strong>どんなテーマでもOK</strong>です。</p>
+    <section class="section">
+      <h2>肉食プランナー</h2>
+      <p>
+        以下の3つの肉食からお好きなタイプをお選びいただき、その正しいやり方をお伝えします。<br><br>
+
+        <strong>KETOVORE：</strong>ケトジェニックとカーニボアの中間に位置する肉食で、適量の果物や野菜を認める食事法。いきなり肉食に振り切るのが不安な方におすすめ。<br><br>
+
+        <strong>CARNIVORE：</strong>動物性食品のみを食べる最もスタンダードな肉食。最高の体調を実現し、脳や精神状態のパフォーマンスを最適化したい方におすすめ。<br><br>
+
+        <strong>肉食寄りTKD：</strong>運動前に集中的に糖質を摂るターゲット型ケトジェニック・ダイエット（TKD）を肉食仕様にカスタマイズした食事法。フィットネスに励む方におすすめ。
+      </p>
+      <a class="btn-main" href="https://example.com/carnivore" target="_blank">肉食プランナーを開く
+        <svg viewBox="0 0 24 24" fill="none"><path d="M7 17L17 7M17 7H9M17 7v8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </a>
     </section>
 
-    <section class="copy" aria-label="コーチングのご案内">
-      <h2>肉食を1から丁寧に。</h2>
-      <p class="lead">これから始めたい方、やってみたけどうまくいっていない方へ。<br>
-        <strong>あなたの体質・生活に合わせて、最適な肉食の形を一緒に作ります。</strong></p>
-
-      <p>肉食の疑問はもちろん、<strong>栄養・ホルモン・消化・肌・メンタル</strong>など、どんなテーマでもOK。<br>
-        <strong>LINE・メール・電話・Zoom・テキスト</strong>、あなたのやりやすい方法で、いつでも相談してください。</p>
-
-      <p>コーチング期間中は、<strong>24時間いつでもLINEで直接つながれる環境</strong>を用意。<br>
-        疑問や不安が浮かんだ瞬間に、すぐ解決できます。</p>
-
-      <p>―――<br>
-        “知識”ではなく、<strong>“体感で変わる”肉食へ。</strong><br>
-        あなたの変化を、最初から最後まで真摯にサポートします。</p>
-
-      <div class="contact">
-        <a class="btn"
-           href="mailto:neo653515@gmail.com?subject=%E3%82%B3%E3%83%BC%E3%83%81%E3%83%B3%E3%82%B0%E7%94%B3%E8%BE%BC%EF%BC%88Carnivore%20Coaching%20Hub%EF%BC%89&body=%E3%80%90%E3%81%8A%E5%90%8D%E5%89%8D%E3%80%91%0A%E3%80%90%E7%9B%AE%E6%A8%99%3A%20%E4%BE%8B%EF%BC%9A%E4%BD%93%E8%84%82%E7%99%BD%E6%B8%9B%E3%83%BB%E7%AD%8B%E5%8A%9Bup%20%E3%81%AA%E3%81%A9%E3%80%91%0A%E3%80%90%E7%8A%B6%E6%B3%81%3A%20%E4%BE%8B%EF%BC%9A%E7%8F%BE%E5%9C%A8%E3%81%AE%E9%A3%9F%E4%BA%8B%E3%83%BB%E4%BD%93%E8%AA%BF%E3%80%91%0A%E3%80%90%E5%84%AA%E5%85%88%E5%BA%A6%3A%20%E6%A0%BC%E5%A5%BD%E3%83%BB%E7%9D%A1%E7%9C%A0%E3%83%BB%E3%82%B9%E3%82%AD%E3%83%B3%20%E3%81%AA%E3%81%A9%E3%80%91%0A%E3%80%90%E8%A6%81%E6%9C%9B%E3%81%99%E3%82%8B%E3%82%B3%E3%83%9F%E3%83%A5%E3%83%8B%E3%82%B1%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E6%96%B9%E5%BC%8F%3A%20LINE%E3%83%BB%E9%9B%BB%E8%A9%B1%E3%83%BBZoom%E3%83%BB%E3%83%86%E3%82%AD%E3%82%B9%E3%83%88%20%E3%81%AA%E3%81%A9%E3%80%91%0A%0A%E3%81%93%E3%81%93%E3%81%BE%E3%81%A7%E3%81%AE%E6%9B%B8%E5%BC%8F%E3%81%AF%E4%BF%AE%E6%AD%A3OK%E3%81%A7%E3%81%99%E3%80%82"
-           >
-          📩 ご相談・コーチングをメールで送る
-          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 6h16v12H4z" stroke="currentColor" stroke-width="1.5"/><path d="m4 7 8 6 8-6" stroke="currentColor" stroke-width="1.5"/></svg>
-        </a>
-        <a class="mail" href="mailto:neo653515@gmail.com">neo653515@gmail.com</a>
-      </div>
-    </section>
-
-    <footer>
-      <div>© <span id="y"></span> Crafted by Neo. All rights reserved.</div>
-    </footer>
-  </main>
-
-  <script>
-    // 年号の自動更新
-    document.getElementById('y').textContent = new Date().getFullYear();
-  </script>
-</body>
-</html>
+    <section class="section">
+      <h2>コーチング申し込み</h2>
+      <p>以下のフォーマットで記入の上、メールでお申し込みください。</p>
+      <a class="btn-main"
+         href="mailto:neo653515@gmail.com?subject=%E3%82%B3%E3%83%BC%E3%83%81%E3%83%B3%E3%82%B0%E7%94%B3%E3%81%97%E8%BE%BC%E3%81%BF&body=%E3%80%90%E3%81%8A%E5%90%8D%E5%89%8D%E3%83%BB%E3%83%8B%E3%83%83%E3%82%AF%E3%83%8D%E3%83%BC%E3%83%A0%E3%80%91%0A%0A%E3%80%90%E7%9B%AE%E6%A8%99%E3%80%91%0A%E4%BE%8B%EF%BC%9A%E4%BD%93%E8%84%82%E8%82%AA%E3%82%92%E8%90%BD%E3%81%A8%E3%81%97%E3%81%9F%E3%81%84/%E7%AD%8B%E5%8A%9B%E3%82%92%E3%81%A4%E3%81%91%E3%81%9F%E3%81%84/%E8%82%8C%E3%82%92%E7%B6%BA%E9%BA%97%E3%81%AB%E3%81%97%E3%81%9F%E3%81%84/%E9%9B%86%E4%B8%AD%E5%8A%9B%E3%82%92%E9%AB%98%E3%82%81%E3%81%9F%E3%81%84/%E6%9C%80%E9%AB%98%E3%81%AE%E4%BD%93%E8%AA%BF%E3%82%92%E5%AE%9F%E7%8F%BE%E3%81%97%E3%81%9F%E3%81%84/%E8%84%B3%E3%81%AE%E3%83%91%E3%83%95%E3%82%A9%E3%83%BC%E3%83%9E%E3%83%B3%E3%82%B9%E3%82%92%E4%B8%8A%E3%81%92%E3%81%9F%E3%81%84%20%E3%81%AA%E3%81%A9%0A%0A%E3%80%90%E7%8F%BE%E5%9C%A8%E3%81%AE%E9%A3%9F%E4%BA%8B%E3%80%91%0A%E4%BE%8B%EF%BC%9A%E7%B1%B3%E3%81%A8%E3%83%91%E3%83%B3%E4%B8%AD%E5%BF%83%E3%81%A7%E5%8A%A0%E5%B7%A5%E9%A3%9F%E5%93%81%E3%82%82%E3%81%A8%E3%81%8D%E3%81%A9%E3%81%8D%E9%A3%9F%E3%81%B9%E3%82%8B/%E8%82%89%E3%81%AF%E9%A3%9F%E3%81%B9%E3%81%A6%E3%82%8B%E3%81%8C%E9%87%8E%E8%8F%9C%E3%82%82%E6%99%AE%E9%80%9A%E3%81%AB%E9%A3%9F%E3%81%B9%E3%82%8B/%E5%9B%9B%E6%AF%92%E6%8A%9C%E3%81%8D/%E3%83%9B%E3%83%BC%E3%83%AB%E3%83%95%E3%83%BC%E3%83%89%E4%B8%AD%E5%BF%83%E3%81%AE%E3%82%B1%E3%83%88%E3%82%B8%E3%82%A7%E3%83%8B%E3%83%83%E3%82%AF%20%E3%81%AA%E3%81%A9%0A%0A%E3%80%90%E3%82%B3%E3%83%BC%E3%83%81%E3%83%B3%E3%82%B0%E3%82%92%E3%81%8A%E6%9C%9B%E3%81%BF%E3%81%AE%E7%90%86%E7%94%B1%E3%80%91%0A%E4%BE%8B%EF%BC%9A%E8%82%89%E9%A3%9F%E3%81%AE%E6%81%A9%E6%81%B5%E3%82%92%E4%BD%93%E6%84%9F%E3%81%97%E3%81%9F%E3%81%84/%E8%82%89%E9%A3%9F%E3%82%92%E5%AE%9F%E8%B7%B5%E3%81%97%E3%81%A6%E3%81%84%E3%82%8B%E3%81%8C%E4%BD%93%E8%AA%BF%E3%81%8C%E5%84%AA%E3%82%8C%E3%81%AA%E3%81%84/%E6%AD%A3%E3%81%97%E3%81%84%E6%A0%84%E9%A4%8A%E7%9F%A5%E8%AD%98%E3%82%84%E6%83%85%E5%A0%B1%E3%82%92%E7%9F%A5%E3%82%8A%E3%81%9F%E3%81%84/%E8%82%89%E9%A3%9F%E3%81%AB%E3%81%AF%E6%87%90%E7%96%91%E7%9A%84%E3%81%A0%E3%81%8C%E7%9B%B4%E6%8E%A5%E8%A9%B1%E3%82%92%E8%81%9E%E3%81%8D%E3%81%9F%E3%81%84%20%E3%81%AA%E3%81%A9%0A%0A%E3%80%90%E3%81%94%E5%B8%8C%E6%9C%9B%E3%81%AE%E3%82%B3%E3%83%9F%E3%83%A5%E3%83%8B%E3%82%B1%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E6%96%B9%E6%B3%95%E3%80%91%0ALINE%EF%BC%88%E3%83%86%E3%82%AD%E3%82%B9%E3%83%88%EF%BC%89%EF%BC%8F%E9%9B%BB%E8%A9%B1%EF%BC%8FZoom%EF%BC%8F%E8%A4%87%E6%95%B0%E7%B5%84%E3%81%BF%E5%90%88%E3%82%8F%E3%81%9B%E3%81%9F%E3%81%84%0A%0A%E3%80%90%E8%87%AA%E7%94%B1%E8%A8%98%E8%BC%89%E3
