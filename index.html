@@ -1669,6 +1669,41 @@
 
         return ok;
       };
+      
+      const estimateCurrentCarb = () => {
+  if (form.currentCarb.value !== "unknown") return "";
+
+  const riceMap = {
+    "茶碗0〜1杯": 0.5,
+    "茶碗2〜3杯": 2.5,
+    "茶碗4〜5杯": 4.5,
+    "茶碗6杯以上": 6.5
+  };
+
+  const breadMap = {
+    "0〜1枚（個）": 0.5,
+    "2〜3枚（個）": 2.5,
+    "4〜5枚（個）": 4.5,
+    "6枚（個）以上": 6.5
+  };
+
+  const rootsMap = {
+    "拳0〜1個分": 0.5,
+    "拳2〜3個分": 2.5,
+    "拳4〜5個分": 4.5,
+    "拳6個分以上": 6.5
+  };
+
+  const bowls = riceMap[form.riceSel.value] || 0;
+  const pieces = breadMap[form.breadSel.value] || 0;
+  const fists = rootsMap[form.rootsSel.value] || 0;
+
+  const riceG = bowls * 55;
+  const breadG = pieces * 25;
+  const rootsG = fists * 20;
+
+  return Math.round(riceG + breadG + rootsG + 30);
+};
 
       const buildTemplateParams = () => {
   const issues = getCheckedValues('input[name="issues"]');
@@ -1713,10 +1748,11 @@
     height: form.height.value,
     weight: form.weight.value,
     current_carb: carbMap[form.currentCarb.value] || form.currentCarb.value,
-    rice_sel: form.riceSel.value || "",
-    bread_sel: form.breadSel.value || "",
-    roots_sel: form.rootsSel.value || "",
-    habit: habitMap[form.habit.value] || form.habit.value,
+estimated_current_carb: estimateCurrentCarb(),
+rice_sel: form.riceSel.value || "",
+bread_sel: form.breadSel.value || "",
+roots_sel: form.rootsSel.value || "",
+habit: habitMap[form.habit.value] || form.habit.value,
     fitness_type: fitnessMap[form.fitnessType.value] || form.fitnessType.value,
     goal: goalMap[form.goal.value] || form.goal.value,
     target_weight: form.targetWeight.value || "",
