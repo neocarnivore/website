@@ -382,6 +382,10 @@
       border-color:transparent;
     }
 
+    select option:disabled{
+      color:#9aa3af;
+    }
+    
     .hint{
       font-size:11.5px;
       color:var(--muted);
@@ -417,15 +421,17 @@
     }
 
     .meal-emoji{
-      width:24px;
-      height:24px;
-      display:grid;
-      place-items:center;
-      border-radius:999px;
-      background:rgba(255,138,61,.10);
-      font-size:13px;
-      flex:0 0 24px;
-    }
+  width:32px;
+  height:32px;
+  display:grid;
+  place-items:center;
+  border-radius:999px;
+  background:rgba(255,138,61,.10);
+  font-size:12px;
+  font-weight:700;
+  color:var(--accent-2);
+  flex:0 0 32px;
+}
 
     .meal-mini input{
       margin:0;
@@ -788,30 +794,30 @@
                 </div>
 
                 <div class="planner-pair">
-                  <div class="field">
-                    <label class="inline-label">性別</label>
-                    <select id="sex" name="sex" required>
-                      <option value="">選択してください</option>
-                      <option value="M">男性</option>
-                      <option value="F">女性</option>
-                    </select>
-                  </div>
-                  <div class="field">
-                    <label class="inline-label">年齢</label>
-                    <input id="age" name="age" type="number" inputmode="decimal" step="0.1" min="12" max="99" placeholder="例：30" required />
-                  </div>
-                </div>
+  <div class="field">
+    <label class="inline-label">年齢</label>
+    <input id="age" name="age" type="number" inputmode="numeric" step="1" min="12" max="99" placeholder="例：30" required />
+  </div>
+  <div class="field">
+    <label class="inline-label">性別</label>
+    <select id="sex" name="sex" required>
+      <option value="">選択してください</option>
+      <option value="M">男性</option>
+      <option value="F">女性</option>
+    </select>
+  </div>
+</div>
 
                 <div class="planner-pair">
-                  <div class="field">
-                    <label class="inline-label">身長（cm）</label>
-                    <input id="height" name="height" type="number" inputmode="decimal" step="0.1" min="120" max="220" placeholder="例：170" required />
-                  </div>
-                  <div class="field">
-                    <label class="inline-label">体重（kg）</label>
-                    <input id="weight" name="weight" type="number" inputmode="decimal" step="0.1" min="30" max="250" placeholder="例：65" required />
-                  </div>
-                </div>
+  <div class="field">
+    <label class="inline-label">身長（cm）</label>
+    <input id="height" name="height" type="number" inputmode="numeric" step="0.1" min="120" max="220" placeholder="例：170" required />
+  </div>
+  <div class="field">
+    <label class="inline-label">体重（kg）</label>
+    <input id="weight" name="weight" type="number" inputmode="numeric" step="0.1" min="30" max="250" placeholder="例：65" required />
+  </div>
+</div>
 
                 <div class="field">
                   <label class="inline-label">現在の糖質量（g/日）</label>
@@ -943,25 +949,25 @@
             <div class="field">
               <label class="inline-label">1日の食事内容（ざっくり）</label>
               <div class="meal-split">
-                <div class="meal-mini">
-                  <div class="meal-mini-head"><span class="meal-emoji">🌅</span><span>朝</span></div>
-                  <input id="mealMorning" name="mealMorning" type="text" placeholder="例：卵とコーヒー" />
-                </div>
-                <div class="meal-mini">
-                  <div class="meal-mini-head"><span class="meal-emoji">☀️</span><span>昼</span></div>
-                  <input id="mealNoon" name="mealNoon" type="text" placeholder="例：外食で丼もの" />
-                </div>
-                <div class="meal-mini">
-                  <div class="meal-mini-head"><span class="meal-emoji">🌙</span><span>夜</span></div>
-                  <input id="mealNight" name="mealNight" type="text" placeholder="例：肉料理とご飯" />
-                </div>
-              </div>
+  <div class="meal-mini">
+    <div class="meal-mini-head"><span class="meal-emoji">朝</span></div>
+    <input id="mealMorning" name="mealMorning" type="text" />
+  </div>
+  <div class="meal-mini">
+    <div class="meal-mini-head"><span class="meal-emoji">昼</span></div>
+    <input id="mealNoon" name="mealNoon" type="text" />
+  </div>
+  <div class="meal-mini">
+    <div class="meal-mini-head"><span class="meal-emoji">夜</span></div>
+    <input id="mealNight" name="mealNight" type="text" />
+  </div>
+</div>
               <div class="error" data-error-for="dailyMeals">1日の食事内容を入力してください。</div>
             </div>
 
             <div class="field">
               <label class="inline-label">よく食べるもの</label>
-              <textarea id="favoriteFoods" name="favoriteFoods" required placeholder="例：ラーメン、アイス、ヨーグルト、鶏胸肉 など"></textarea>
+              <textarea id="favoriteFoods" name="favoriteFoods" required placeholder="例：ラーメン、アイス、鶏胸肉など"></textarea>
               <div class="error" data-error-for="favoriteFoods">よく食べるものを入力してください。</div>
             </div>
           </div>
@@ -969,7 +975,7 @@
           <div class="grid-2">
             <div class="field">
               <label class="inline-label">間食・飲み物</label>
-              <textarea id="snacksDrinks" name="snacksDrinks" required placeholder="例：カフェラテ、エナジードリンク、お菓子 など"></textarea>
+              <textarea id="snacksDrinks" name="snacksDrinks" required placeholder="例：ラテ、エナジードリンク、お菓子など"></textarea>
               <div class="error" data-error-for="snacksDrinks">間食・飲み物を入力してください。</div>
             </div>
 
@@ -1277,6 +1283,25 @@
       };
       form.sex.addEventListener("change", syncSexDependentUi);
 
+      const habit = document.getElementById("habit");
+      const fitnessType = document.getElementById("fitnessType");
+
+      const syncFitnessTypeUi = () => {
+        const noneOption = fitnessType.querySelector('option[value="none"]');
+        const isNoExercise = habit.value === "1.2";
+
+        if (isNoExercise) {
+          fitnessType.value = "none";
+          fitnessType.disabled = true;
+          if (noneOption) noneOption.disabled = false;
+        } else {
+          if (fitnessType.value === "none") fitnessType.value = "";
+          fitnessType.disabled = false;
+          if (noneOption) noneOption.disabled = true;
+        }
+      };
+
+      habit.addEventListener("change", syncFitnessTypeUi);
       const bindYesNoField = (segId, hiddenId, key, textWrapId, textId) => {
         bindSeg(segId, hiddenId, key, (value) => {
           const wrap = document.getElementById(textWrapId);
@@ -1758,6 +1783,7 @@
       });
 
       syncSexDependentUi();
+      syncFitnessTypeUi();
     })();
   </script>
 </body>
