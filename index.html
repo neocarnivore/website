@@ -1236,8 +1236,7 @@
   EMAILJS_TEMPLATE_ID: "template_v2ls78f",
   ADMIN_RESET_KEY: "neo-reset-slots",
   RESERVED_KEY: "coaching_reserved_slots_v2",
-  SELECTED_LIMIT: 3,
-  API_URL: "https://script.google.com/macros/s/AKfycbzpg8Wj6teczM9PiL85unfH4OnXwqyM6pd8EwCZEEz7t3KnEI3xQVt8R7ifRC-N6m9q/exec"
+  SELECTED_LIMIT: 3
 };
 
       const form = document.getElementById("coachingForm");
@@ -1397,7 +1396,7 @@
       const times = buildTimeList("10:30", "18:30", 30);
 
             const selectedSlots = new Set();
-      let reservedSlots = new Set();
+      let reservedSlots = new Set(JSON.parse(localStorage.getItem(CONFIG.RESERVED_KEY) || "[]"));
       let isScheduleEditMode = false;
 
       const isMagicScheduleEditor = () => {
@@ -1433,26 +1432,6 @@
         scheduleMsg.textContent = text;
         scheduleMsg.classList.toggle("is-error", isError);
       };
-
-const loadReservedSlots = async () => {
-  try {
-    const res = await fetch(`${CONFIG.API_URL}?t=${Date.now()}`, { cache: "no-store" });
-    const data = await res.json();
-
-    const arr = Array.isArray(data?.reserved)
-      ? data.reserved
-      : Array.isArray(data)
-      ? data
-      : [];
-
-    reservedSlots = new Set(arr);
-    renderSchedule();
-  } catch (err) {
-    console.error(err);
-    renderSchedule();
-    showInlineMsg("予約枠の取得に失敗しました。通信環境をご確認ください。", true);
-  }
-};
 
       const syncSelectedInput = () => {
         selectedSlotsInput.value = JSON.stringify([...selectedSlots]);
@@ -1619,26 +1598,16 @@ const loadReservedSlots = async () => {
 
       if (isAdminMode()) adminBar.style.display = "block";
 
-      resetReservedBtn.addEventListener("click", async () => {
-  try {
-    await fetch(CONFIG.API_URL, {
-  method: "POST",
-  headers: { "Content-Type": "text/plain;charset=utf-8" },
-  body: JSON.stringify({ reserved: [] })
-});
+      resetReservedBtn.addEventListener("click", () => {
+        localStorage.removeItem(CONFIG.RESERVED_KEY);
+        reservedSlots = new Set();
+        selectedSlots.clear();
+        syncSelectedInput();
+        renderSchedule();
+        showInlineMsg("予約枠を全リセットしました");
+      });
 
-reservedSlots = new Set();
-selectedSlots.clear();
-syncSelectedInput();
-await loadReservedSlots();
-showInlineMsg("予約枠を全リセットしました");
-  } catch (err) {
-    console.error(err);
-    showInlineMsg("リセットに失敗しました。", true);
-  }
-});
-
-      loadReservedSlots();
+      renderSchedule();
 
       const validatePlanner = () => {
         const ids = ["sex","age","height","weight","currentCarb","habit","fitnessType","goal","lineName"];
@@ -1901,33 +1870,21 @@ habit: habitMap[form.habit.value] || form.habit.value,
         msg.textContent = "";
 
         if (isMagicScheduleEditor()) {
-  if (!isScheduleEditMode) {
-    isScheduleEditMode = true;
-    document.querySelector(".schedule-wrap")?.classList.add("is-editing");
-    renderSchedule();
-    showInlineMsg("編集モードです。×をタップで○、○をタップで×に変更できます。再度送信で反映されます。");
-    return;
-  }
+          if (!isScheduleEditMode) {
+            isScheduleEditMode = true;
+            document.querySelector(".schedule-wrap")?.classList.add("is-editing");
+            renderSchedule();
+            showInlineMsg("編集モードです。×をタップで○、○をタップで×に変更できます。再度送信で反映されます。");
+            return;
+          }
 
-  try {
-    await fetch(CONFIG.API_URL, {
-  method: "POST",
-  headers: { "Content-Type": "text/plain;charset=utf-8" },
-  body: JSON.stringify({ reserved: [...reservedSlots] })
-});
-
-isScheduleEditMode = false;
-document.querySelector(".schedule-wrap")?.classList.remove("is-editing");
-selectedSlots.clear();
-syncSelectedInput();
-await loadReservedSlots();
-showInlineMsg("スケジュールを更新しました。");
-  } catch (err) {
-    console.error(err);
-    showInlineMsg("スケジュール更新に失敗しました。", true);
-  }
-  return;
-}
+          localStorage.setItem(CONFIG.RESERVED_KEY, JSON.stringify([...reservedSlots]));
+          isScheduleEditMode = false;
+          document.querySelector(".schedule-wrap")?.classList.remove("is-editing");
+          renderSchedule();
+          showInlineMsg("スケジュールを更新しました。");
+          return;
+        }
 
         if (!validateAll()) return;
         
@@ -1949,20 +1906,10 @@ showInlineMsg("スケジュールを更新しました。");
           await emailjs.send(CONFIG.EMAILJS_SERVICE_ID, CONFIG.EMAILJS_TEMPLATE_ID, params);
 
           reservedSlots = new Set([...reservedSlots, ...selectedSlots]);
+          localStorage.setItem(CONFIG.RESERVED_KEY, JSON.stringify([...reservedSlots]));
 
-await fetch(CONFIG.API_URL, {
-  method: "POST",
-  headers: { "Content-Type": "text/plain;charset=utf-8" },
-  body: JSON.stringify({ reserved: [...reservedSlots] })
-});
-
-selectedSlots.clear();
-syncSelectedInput();
-renderSchedule();
-
-msg.textContent = "送信が完了しました。";
-showThankYouView();
-
+          msg.textContent = "送信が完了しました。";
+          showThankYouView();
         } catch (err) {
           console.error(err);
           msg.textContent = "送信に失敗しました。EmailJS設定または通信環境をご確認ください。";
