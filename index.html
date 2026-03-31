@@ -1702,7 +1702,11 @@
   const breadG = pieces * 25;
   const rootsG = fists * 20;
 
-  return Math.round(riceG + breadG + rootsG + 30);
+  const fromFood = riceG + breadG + rootsG + 30;
+  const baseline = form.sex.value === "M" ? 300 : 250;
+  const estimated = Math.round((baseline + (fromFood || baseline)) / 2);
+
+  return Math.min(600, Math.max(60, estimated));
 };
 
       const buildTemplateParams = () => {
