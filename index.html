@@ -1895,21 +1895,31 @@ habit: habitMap[form.habit.value] || form.habit.value,
         msg.textContent = "";
 
         if (isMagicScheduleEditor()) {
-          if (!isScheduleEditMode) {
-            isScheduleEditMode = true;
-            document.querySelector(".schedule-wrap")?.classList.add("is-editing");
-            renderSchedule();
-            showInlineMsg("編集モードです。×をタップで○、○をタップで×に変更できます。再度送信で反映されます。");
-            return;
-          }
+  if (!isScheduleEditMode) {
+    isScheduleEditMode = true;
+    document.querySelector(".schedule-wrap")?.classList.add("is-editing");
+    renderSchedule();
+    showInlineMsg("編集モードです。×をタップで○、○をタップで×に変更できます。再度送信で反映されます。");
+    return;
+  }
 
-          localStorage.setItem(CONFIG.RESERVED_KEY, JSON.stringify([...reservedSlots]));
-          isScheduleEditMode = false;
-          document.querySelector(".schedule-wrap")?.classList.remove("is-editing");
-          renderSchedule();
-          showInlineMsg("スケジュールを更新しました。");
-          return;
-        }
+  try {
+    await fetch(CONFIG.API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify({ reserved: [...reservedSlots] })
+    });
+
+    isScheduleEditMode = false;
+    document.querySelector(".schedule-wrap")?.classList.remove("is-editing");
+    renderSchedule();
+    showInlineMsg("スケジュールを更新しました。");
+  } catch (err) {
+    console.error(err);
+    showInlineMsg("スケジュール更新に失敗しました。", true);
+  }
+  return;
+}
 
         if (!validateAll()) return;
         
