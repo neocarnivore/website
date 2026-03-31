@@ -1436,13 +1436,19 @@
 
 const loadReservedSlots = async () => {
   try {
-    const res = await fetch(CONFIG.API_URL);
+    const res = await fetch(`${CONFIG.API_URL}?t=${Date.now()}`, { cache: "no-store" });
     const data = await res.json();
-    reservedSlots = new Set(Array.isArray(data.reserved) ? data.reserved : []);
+
+    const arr = Array.isArray(data?.reserved)
+      ? data.reserved
+      : Array.isArray(data)
+      ? data
+      : [];
+
+    reservedSlots = new Set(arr);
     renderSchedule();
   } catch (err) {
     console.error(err);
-    reservedSlots = new Set();
     renderSchedule();
     showInlineMsg("予約枠の取得に失敗しました。通信環境をご確認ください。", true);
   }
@@ -1616,16 +1622,16 @@ const loadReservedSlots = async () => {
       resetReservedBtn.addEventListener("click", async () => {
   try {
     await fetch(CONFIG.API_URL, {
-      method: "POST",
-      headers: { "Content-Type": "text/plain;charset=utf-8" },
-      body: JSON.stringify({ reserved: [] })
-    });
+  method: "POST",
+  headers: { "Content-Type": "text/plain;charset=utf-8" },
+  body: JSON.stringify({ reserved: [] })
+});
 
-    reservedSlots = new Set();
-    selectedSlots.clear();
-    syncSelectedInput();
-    renderSchedule();
-    showInlineMsg("予約枠を全リセットしました");
+reservedSlots = new Set();
+selectedSlots.clear();
+syncSelectedInput();
+await loadReservedSlots();
+showInlineMsg("予約枠を全リセットしました");
   } catch (err) {
     console.error(err);
     showInlineMsg("リセットに失敗しました。", true);
@@ -1905,15 +1911,17 @@ habit: habitMap[form.habit.value] || form.habit.value,
 
   try {
     await fetch(CONFIG.API_URL, {
-      method: "POST",
-      headers: { "Content-Type": "text/plain;charset=utf-8" },
-      body: JSON.stringify({ reserved: [...reservedSlots] })
-    });
+  method: "POST",
+  headers: { "Content-Type": "text/plain;charset=utf-8" },
+  body: JSON.stringify({ reserved: [...reservedSlots] })
+});
 
-    isScheduleEditMode = false;
-    document.querySelector(".schedule-wrap")?.classList.remove("is-editing");
-    renderSchedule();
-    showInlineMsg("スケジュールを更新しました。");
+isScheduleEditMode = false;
+document.querySelector(".schedule-wrap")?.classList.remove("is-editing");
+selectedSlots.clear();
+syncSelectedInput();
+await loadReservedSlots();
+showInlineMsg("スケジュールを更新しました。");
   } catch (err) {
     console.error(err);
     showInlineMsg("スケジュール更新に失敗しました。", true);
@@ -1947,6 +1955,10 @@ await fetch(CONFIG.API_URL, {
   headers: { "Content-Type": "text/plain;charset=utf-8" },
   body: JSON.stringify({ reserved: [...reservedSlots] })
 });
+
+selectedSlots.clear();
+syncSelectedInput();
+renderSchedule();
 
 msg.textContent = "送信が完了しました。";
 showThankYouView();
