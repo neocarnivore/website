@@ -1848,6 +1848,7 @@ habit: habitMap[form.habit.value] || form.habit.value,
       form.lineName.addEventListener("input", () => showError("planner", false));
       form.favoriteFoods.addEventListener("input", () => showError("favoriteFoods", false));
       form.snacksDrinks.addEventListener("input", () => showError("snacksDrinks", false));
+      document.getElementById("eatingOut").addEventListener("change", () => showError("eatingOut", false));
       form.expectation.addEventListener("input", () => showError("expectation", false));
       form.mealMorning.addEventListener("input", () => showError("dailyMeals", false));
       form.mealNoon.addEventListener("input", () => showError("dailyMeals", false));
