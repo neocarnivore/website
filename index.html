@@ -1236,7 +1236,8 @@
   EMAILJS_TEMPLATE_ID: "template_v2ls78f",
   ADMIN_RESET_KEY: "neo-reset-slots",
   RESERVED_KEY: "coaching_reserved_slots_v2",
-  SELECTED_LIMIT: 3
+  SELECTED_LIMIT: 3,
+  API_URL: "https://script.google.com/macros/s/AKfycbzpg8Wj6teczM9PiL85unfH4OnXwqyM6pd8EwCZEEz7t3KnEI3xQVt8R7ifRC-N6m9q/exec"
 };
 
       const form = document.getElementById("coachingForm");
@@ -1396,7 +1397,7 @@
       const times = buildTimeList("10:30", "18:30", 30);
 
             const selectedSlots = new Set();
-      let reservedSlots = new Set(JSON.parse(localStorage.getItem(CONFIG.RESERVED_KEY) || "[]"));
+      let reservedSlots = new Set();
       let isScheduleEditMode = false;
 
       const isMagicScheduleEditor = () => {
@@ -1432,6 +1433,20 @@
         scheduleMsg.textContent = text;
         scheduleMsg.classList.toggle("is-error", isError);
       };
+
+const loadReservedSlots = async () => {
+  try {
+    const res = await fetch(CONFIG.API_URL);
+    const data = await res.json();
+    reservedSlots = new Set(Array.isArray(data.reserved) ? data.reserved : []);
+    renderSchedule();
+  } catch (err) {
+    console.error(err);
+    reservedSlots = new Set();
+    renderSchedule();
+    showInlineMsg("予約枠の取得に失敗しました。通信環境をご確認ください。", true);
+  }
+};
 
       const syncSelectedInput = () => {
         selectedSlotsInput.value = JSON.stringify([...selectedSlots]);
@@ -1598,16 +1613,26 @@
 
       if (isAdminMode()) adminBar.style.display = "block";
 
-      resetReservedBtn.addEventListener("click", () => {
-        localStorage.removeItem(CONFIG.RESERVED_KEY);
-        reservedSlots = new Set();
-        selectedSlots.clear();
-        syncSelectedInput();
-        renderSchedule();
-        showInlineMsg("予約枠を全リセットしました");
-      });
+      resetReservedBtn.addEventListener("click", async () => {
+  try {
+    await fetch(CONFIG.API_URL, {
+      method: "POST",
+      headers: { "Content-Type": "text/plain;charset=utf-8" },
+      body: JSON.stringify({ reserved: [] })
+    });
 
-      renderSchedule();
+    reservedSlots = new Set();
+    selectedSlots.clear();
+    syncSelectedInput();
+    renderSchedule();
+    showInlineMsg("予約枠を全リセットしました");
+  } catch (err) {
+    console.error(err);
+    showInlineMsg("リセットに失敗しました。", true);
+  }
+});
+
+      loadReservedSlots();
 
       const validatePlanner = () => {
         const ids = ["sex","age","height","weight","currentCarb","habit","fitnessType","goal","lineName"];
@@ -1906,10 +1931,16 @@ habit: habitMap[form.habit.value] || form.habit.value,
           await emailjs.send(CONFIG.EMAILJS_SERVICE_ID, CONFIG.EMAILJS_TEMPLATE_ID, params);
 
           reservedSlots = new Set([...reservedSlots, ...selectedSlots]);
-          localStorage.setItem(CONFIG.RESERVED_KEY, JSON.stringify([...reservedSlots]));
 
-          msg.textContent = "送信が完了しました。";
-          showThankYouView();
+await fetch(CONFIG.API_URL, {
+  method: "POST",
+  headers: { "Content-Type": "text/plain;charset=utf-8" },
+  body: JSON.stringify({ reserved: [...reservedSlots] })
+});
+
+msg.textContent = "送信が完了しました。";
+showThankYouView();
+
         } catch (err) {
           console.error(err);
           msg.textContent = "送信に失敗しました。EmailJS設定または通信環境をご確認ください。";
