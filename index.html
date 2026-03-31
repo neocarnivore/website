@@ -29,18 +29,20 @@
     *{box-sizing:border-box}
 
     html,body{
-      margin:0;
-      padding:0;
-      width:100%;
-      max-width:100%;
-      overflow-x:hidden;
-      font-family:system-ui,-apple-system,"Hiragino Kaku Gothic ProN","Noto Sans JP","Segoe UI",sans-serif;
-      color:var(--text);
-      background:
-        radial-gradient(1200px 500px at 85% -10%, var(--accent-soft), transparent 60%),
-        radial-gradient(900px 500px at -10% 10%, #fff5ee, transparent 55%),
-        var(--bg);
-    }
+  margin:0;
+  padding:0;
+  width:100%;
+  max-width:100%;
+  overflow-x:hidden;
+  font-family:system-ui,-apple-system,"Hiragino Kaku Gothic ProN","Noto Sans JP","Segoe UI",sans-serif;
+  color:var(--text);
+  background:
+    radial-gradient(1200px 500px at 85% -10%, var(--accent-soft), transparent 60%),
+    radial-gradient(900px 500px at -10% 10%, #fff5ee, transparent 55%),
+    var(--bg);
+  -webkit-text-size-adjust:100%;
+  text-size-adjust:100%;
+}
 
     .page{
       min-height:100dvh;
@@ -388,10 +390,13 @@
     }
 
     .schedule-scroll{
-      overflow-x:auto;
-      background:#fff;
-      width:100%;
-    }
+  overflow-x:auto;
+  overflow-y:hidden;
+  -webkit-overflow-scrolling:touch;
+  background:#fff;
+  width:100%;
+  max-width:100%;
+}
 
     table.schedule{
       width:100%;
