@@ -1236,7 +1236,8 @@
   EMAILJS_TEMPLATE_ID: "template_v2ls78f",
   ADMIN_RESET_KEY: "neo-reset-slots",
   RESERVED_KEY: "coaching_reserved_slots_v2",
-  SELECTED_LIMIT: 3
+  SELECTED_LIMIT: 3,
+  GAS_URL: "https://script.google.com/macros/s/AKfycbzpg8Wj6teczM9PiL85unfH4OnXwqyM6pd8EwCZEEz7t3KnEI3xQVt8R7ifRC-N6m9q/exec"
 };
 
       const form = document.getElementById("coachingForm");
@@ -1396,8 +1397,53 @@
       const times = buildTimeList("10:30", "18:30", 30);
 
             const selectedSlots = new Set();
-      let reservedSlots = new Set(JSON.parse(localStorage.getItem(CONFIG.RESERVED_KEY) || "[]"));
+      let reservedSlots = new Set();
       let isScheduleEditMode = false;
+
+const fetchReservedSlots = async () => {
+  if (!CONFIG.GAS_URL) {
+    return JSON.parse(localStorage.getItem(CONFIG.RESERVED_KEY) || "[]");
+  }
+
+  const res = await fetch(CONFIG.GAS_URL, {
+    method: "GET",
+    cache: "no-store"
+  });
+
+  if (!res.ok) throw new Error("予約枠の取得に失敗しました");
+  const data = await res.json();
+  return Array.isArray(data.reserved) ? data.reserved : [];
+};
+
+const saveReservedSlots = async (slots) => {
+  if (!CONFIG.GAS_URL) {
+    localStorage.setItem(CONFIG.RESERVED_KEY, JSON.stringify(slots));
+    return { ok: true };
+  }
+
+  const res = await fetch(CONFIG.GAS_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "text/plain;charset=utf-8"
+    },
+    body: JSON.stringify({ reserved: slots })
+  });
+
+  if (!res.ok) throw new Error("予約枠の保存に失敗しました");
+  return await res.json();
+};
+
+const reloadReservedSlots = async () => {
+  const latest = await fetchReservedSlots();
+  reservedSlots = new Set(latest);
+
+  [...selectedSlots].forEach(id => {
+    if (reservedSlots.has(id)) selectedSlots.delete(id);
+  });
+
+  syncSelectedInput();
+  renderSchedule();
+};
 
       const isMagicScheduleEditor = () => {
   const name = (form.lineName.value || "").trim();
@@ -1598,16 +1644,24 @@
 
       if (isAdminMode()) adminBar.style.display = "block";
 
-      resetReservedBtn.addEventListener("click", () => {
-        localStorage.removeItem(CONFIG.RESERVED_KEY);
-        reservedSlots = new Set();
-        selectedSlots.clear();
-        syncSelectedInput();
-        renderSchedule();
-        showInlineMsg("予約枠を全リセットしました");
-      });
+      resetReservedBtn.addEventListener("click", async () => {
+  try {
+    await saveReservedSlots([]);
+    reservedSlots = new Set();
+    selectedSlots.clear();
+    syncSelectedInput();
+    renderSchedule();
+    showInlineMsg("予約枠を全リセットしました");
+  } catch (err) {
+    console.error(err);
+    showInlineMsg("予約枠のリセットに失敗しました。", true);
+  }
+});
 
-      renderSchedule();
+      reloadReservedSlots().catch(err => {
+  console.error(err);
+  renderSchedule();
+});
 
       const validatePlanner = () => {
         const ids = ["sex","age","height","weight","currentCarb","habit","fitnessType","goal","lineName"];
@@ -1878,12 +1932,12 @@ habit: habitMap[form.habit.value] || form.habit.value,
             return;
           }
 
-          localStorage.setItem(CONFIG.RESERVED_KEY, JSON.stringify([...reservedSlots]));
-          isScheduleEditMode = false;
-          document.querySelector(".schedule-wrap")?.classList.remove("is-editing");
-          renderSchedule();
-          showInlineMsg("スケジュールを更新しました。");
-          return;
+          await saveReservedSlots([...reservedSlots]);
+isScheduleEditMode = false;
+document.querySelector(".schedule-wrap")?.classList.remove("is-editing");
+await reloadReservedSlots();
+showInlineMsg("スケジュールを更新しました。");
+return;
         }
 
         if (!validateAll()) return;
@@ -1905,8 +1959,9 @@ habit: habitMap[form.habit.value] || form.habit.value,
 
           await emailjs.send(CONFIG.EMAILJS_SERVICE_ID, CONFIG.EMAILJS_TEMPLATE_ID, params);
 
-          reservedSlots = new Set([...reservedSlots, ...selectedSlots]);
-          localStorage.setItem(CONFIG.RESERVED_KEY, JSON.stringify([...reservedSlots]));
+          const mergedReserved = [...new Set([...reservedSlots, ...selectedSlots])];
+await saveReservedSlots(mergedReserved);
+reservedSlots = new Set(mergedReserved);
 
           msg.textContent = "送信が完了しました。";
           showThankYouView();
