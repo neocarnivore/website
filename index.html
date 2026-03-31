@@ -2,266 +2,1428 @@
 <html lang="ja">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Carnivore Coaching Hub — Crafted by Neo</title>
-  <meta name="description" content="移行食プランナー／肉食プランナーへの入口と、コーチング案内。カーニボア・ケトボア・TKDをあなたの体質・生活に最適化。">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>肉食コーチング診断フォーム</title>
+  <meta name="description" content="食事・体調・生活習慣・日程希望をまとめて送れる、肉食コーチング用の診断フォームです。" />
   <style>
     :root{
-      --bg: #0e0f12;
-      --bg2:#13151a;
-      --card:#171a21;
-      --text:#e9ecf1;
-      --muted:#a7b0bf;
-      --brand:#69f0ae;
-      --brand2:#21c7b8;
-      --border:#232937;
-      --accent:#7bd3ff;
-      --badge:#232c3a;
-      --shadow: 0 6px 18px rgba(0,0,0,.35);
-      --radius:16px;
-      --radius-sm:12px;
-      --gap:18px;
-      --w-max:1080px;
+      --bg:#fff8f4;
+      --card:#ffffff;
+      --text:#0f172a;
+      --muted:#6b7280;
+      --line:#f1dfd3;
+      --accent:#ff8a3d;
+      --accent-2:#e85d04;
+      --accent-soft:#fff1e8;
+      --danger:#dc2626;
+      --shadow:0 10px 28px rgba(66,24,2,.08);
+      --radius-lg:16px;
+      --radius-md:10px;
+      --radius-sm:8px;
+      --sched:#ff8a3d;
+      --sched-grid:#ead8cb;
+      --sched-head:#f8efe9;
+      --sched-x:#111827;
     }
-    @media (prefers-color-scheme: light){
-      :root{
-        --bg:#f7f8fb;
-        --bg2:#ffffff;
-        --card:#ffffff;
-        --text:#0e1220;
-        --muted:#5a6475;
-        --border:#e8ecf3;
-        --badge:#eef3fb;
-        --shadow: 0 6px 18px rgba(15,38,71,.10);
-      }
-    }
+
     *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
+
+    html,body{
       margin:0;
-      background: radial-gradient(1200px 800px at 70% -10%, rgba(123,211,255,.12), transparent 60%),
-                  radial-gradient(1000px 600px at 0% 0%, rgba(105,240,174,.09), transparent 60%),
-                  var(--bg);
+      padding:0;
+      width:100%;
+      max-width:100%;
+      overflow-x:hidden;
+      font-family:system-ui,-apple-system,"Hiragino Kaku Gothic ProN","Noto Sans JP","Segoe UI",sans-serif;
       color:var(--text);
-      font:16px/1.65 system-ui,-apple-system,"Segoe UI",Roboto,Inter,Arial,sans-serif;
-      letter-spacing:.02em;
+      background:
+        radial-gradient(1200px 500px at 85% -10%, var(--accent-soft), transparent 60%),
+        radial-gradient(900px 500px at -10% 10%, #fff5ee, transparent 55%),
+        var(--bg);
     }
-    .wrap{max-width:var(--w-max); margin:0 auto; padding:28px 20px 56px}
+
+    .page{
+      min-height:100dvh;
+      display:grid;
+      grid-template-rows:auto 1fr auto;
+      gap:18px;
+    }
+
     header{
-      position:sticky; top:0; z-index:5;
-      backdrop-filter:saturate(1.2) blur(10px);
-      background: color-mix(in srgb, var(--bg) 88%, transparent);
-      border-bottom:1px solid var(--border);
-    }
-    .nav{max-width:var(--w-max); margin:0 auto; padding:14px 20px; display:flex; align-items:center; gap:14px}
-    .logo{
-      display:flex; align-items:center; gap:10px; text-decoration:none; color:var(--text);
-      font-weight:700; letter-spacing:.03em;
-    }
-    .logo svg{width:28px; height:28px}
-    .pill{
-      margin-left:auto; font-size:.88rem; color:var(--muted); padding:6px 10px; border:1px solid var(--border); border-radius:999px;
+      position:sticky;
+      top:0;
+      z-index:10;
+      backdrop-filter:blur(10px);
+      background:rgba(255,248,244,.88);
+      border-bottom:1px solid rgba(0,0,0,.04);
     }
 
-    .hero{padding:36px 0 18px}
-    .hero h1{
-      font-size:clamp(26px, 3.6vw, 38px); line-height:1.25; margin:0 0 10px;
-    }
-    .hero p{margin:0; color:var(--muted); font-size:clamp(14px, 1.6vw, 16px)}
-    .grid{
-      display:grid; gap:var(--gap);
-      grid-template-columns: 1fr;
-      margin-top:24px;
-    }
-    @media (min-width:840px){
-      .grid{grid-template-columns: 1fr 1fr;}
-    }
-
-    .card{
-      position:relative; overflow:hidden; border-radius:var(--radius);
-      background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(0,0,0,.08)), var(--card);
-      border:1px solid var(--border);
-      box-shadow:var(--shadow);
-      min-height:220px;
-      transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
-      text-decoration:none; color:inherit; display:block;
-      isolation:isolate;
-    }
-    .card:hover{ transform: translateY(-2px); box-shadow: 0 10px 26px rgba(0,0,0,.35); border-color: color-mix(in srgb, var(--accent) 40%, var(--border)); }
-    .card .ink{
-      position:absolute; inset:0; background:
-        radial-gradient(800px 380px at 10% 0%, rgba(123,211,255,.18), transparent 60%),
-        radial-gradient(600px 300px at 90% 100%, rgba(105,240,174,.18), transparent 60%);
-      opacity:.8; z-index:0;
-    }
-    .card .body{
-      position:relative; z-index:1; padding:22px;
-      display:flex; flex-direction:column; justify-content:space-between; height:100%;
+    .header-inner{
+      max-width:980px;
+      margin:0 auto;
+      padding:14px 16px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
       gap:12px;
     }
-    .eyebrow{
-      display:inline-flex; align-items:center; gap:8px;
-      font-size:.82rem; color:var(--muted); background:var(--badge); border:1px solid var(--border);
-      padding:6px 10px; border-radius:999px;
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      font-weight:800;
+      min-width:0;
     }
-    .title{
-      margin:4px 0 6px; font-weight:800; letter-spacing:.01em;
-      font-size:clamp(20px, 2.6vw, 24px);
+
+    .brand-mark{
+      width:32px;
+      height:32px;
+      border-radius:10px;
+      flex:0 0 32px;
+      display:grid;
+      place-items:center;
+      background:linear-gradient(135deg,#ffd4bf,#fff4ed);
+      border:1px solid rgba(255,138,61,.22);
+      box-shadow:0 2px 6px rgba(66,24,2,.12);
+      font-size:18px;
     }
-    .subtitle{color:var(--muted); font-size:.98rem}
-    .foot-row{display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:6px}
-    .cta{
-      display:inline-flex; align-items:center; gap:10px;
-      border:1px solid var(--border); padding:10px 12px; border-radius:12px; font-weight:600;
-      background:linear-gradient(180deg, rgba(255,255,255,.05), rgba(0,0,0,.04));
+
+    .brand-license{
+      display:block;
+      font-size:10px;
+      color:var(--muted);
+      margin-top:2px;
     }
-    .cta svg{width:18px; height:18px}
-    .badge{
-      display:inline-flex; align-items:center; gap:8px; font-size:.8rem;
-      padding:6px 10px; background:var(--badge); border:1px solid var(--border); border-radius:999px; color:var(--muted);
+
+    .pill-note{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:999px;
+      padding:6px 10px;
+      font-size:11px;
+      color:var(--muted);
       white-space:nowrap;
     }
 
-    .note{
-      margin-top:28px; padding:18px; border:1px dashed var(--border); border-radius:var(--radius-sm);
-      background: linear-gradient(180deg, rgba(255,255,255,.03), rgba(0,0,0,.03)), var(--bg2);
+    .container{
+      max-width:980px;
+      margin:0 auto 24px;
+      padding:0 14px;
     }
-    .note strong{color:var(--text)}
-    .note p{margin:.3em 0; color:var(--muted)}
 
-    .copy{
-      margin-top:34px; background:linear-gradient(180deg, rgba(255,255,255,.03), rgba(0,0,0,.06)), var(--bg2);
-      border:1px solid var(--border); border-radius:var(--radius); padding:24px;
+    .hero{
+      background:linear-gradient(135deg,#fff,#fff 52%,var(--accent-soft));
+      border:1px solid var(--line);
+      border-radius:var(--radius-lg);
+      padding:26px 20px 22px;
+      box-shadow:var(--shadow);
+      position:relative;
+      overflow:hidden;
     }
-    .copy h2{margin:0 0 12px; font-size:clamp(20px, 2.6vw, 26px)}
-    .copy p{margin:.6em 0}
-    .lead{font-size:1.05rem}
-    .lead strong{font-weight:800}
-    .contact{
-      display:flex; flex-wrap:wrap; gap:12px; align-items:center; margin-top:16px
+
+    .hero::after{
+      content:"";
+      position:absolute;
+      right:-110px;
+      top:-130px;
+      width:320px;
+      height:320px;
+      border-radius:50%;
+      background:radial-gradient(circle at 30% 30%, rgba(255,138,61,.16), transparent 65%);
+      pointer-events:none;
     }
+
+    .hero .meta{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:7px 12px;
+      background:rgba(255,241,232,.95);
+      border:1px solid rgba(255,138,61,.18);
+      border-radius:999px;
+      font-size:12px;
+      color:var(--accent-2);
+      font-weight:700;
+      width:fit-content;
+      max-width:100%;
+    }
+
+    .hero h1{
+      margin:10px 0 8px;
+      font-size:clamp(26px,4.3vw,36px);
+      line-height:1.18;
+      letter-spacing:.01em;
+    }
+
+    .hero p{
+      margin:0;
+      color:var(--muted);
+      line-height:1.7;
+      font-size:14px;
+      white-space:pre-line;
+    }
+
+    form{
+      margin-top:14px;
+      background:var(--card);
+      border:1px solid var(--line);
+      border-radius:var(--radius-lg);
+      box-shadow:var(--shadow);
+      padding:10px 0 4px;
+    }
+
+    .section{
+      padding:18px 18px 8px;
+      border-top:1px dashed rgba(0,0,0,.06);
+    }
+
+    .section:first-child{border-top:none}
+
+    .section-title{
+      display:flex;
+      align-items:baseline;
+      gap:8px;
+      margin:0 0 12px;
+      font-size:15px;
+      font-weight:800;
+    }
+
+    .section-title .req{
+      color:var(--danger);
+      font-size:12px;
+    }
+
+    .section-sub{
+      margin:-4px 0 12px;
+      font-size:12px;
+      color:var(--muted);
+      line-height:1.6;
+      white-space:pre-line;
+    }
+
+    .field{
+      display:grid;
+      gap:8px;
+      margin-bottom:14px;
+      min-width:0;
+    }
+
+    .grid-2{
+      display:grid;
+      gap:14px;
+      grid-template-columns:1fr;
+    }
+
+    .grid-3{
+      display:grid;
+      gap:14px;
+      grid-template-columns:1fr;
+    }
+
+    @media(min-width:760px){
+      .grid-2{grid-template-columns:1fr 1fr}
+      .grid-3{grid-template-columns:repeat(3,minmax(0,1fr))}
+    }
+
+    label.inline-label{
+      display:block;
+      font-size:13px;
+      color:var(--muted);
+      margin:0 0 6px;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    select,
+    textarea{
+      width:100%;
+      border:1px solid var(--line);
+      border-radius:var(--radius-md);
+      padding:12px 12px;
+      font-size:16px;
+      outline:none;
+      background:#fff;
+      max-width:100%;
+      transition:border .15s ease, box-shadow .15s ease, background .15s ease;
+    }
+
+    textarea{
+      min-height:112px;
+      resize:vertical;
+    }
+
+    input::placeholder,
+    textarea::placeholder{
+      color:#9aa3af;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus{
+      border-color:rgba(255,138,61,.55);
+      box-shadow:0 0 0 4px rgba(255,138,61,.12);
+      background:#fffdfa;
+    }
+
+    .hint{
+      font-size:11.5px;
+      color:var(--muted);
+      line-height:1.55;
+    }
+
+    .checks{
+      display:grid;
+      gap:10px 14px;
+      grid-template-columns:1fr 1fr;
+    }
+
+    @media(min-width:760px){
+      .checks{grid-template-columns:repeat(3,minmax(0,1fr))}
+    }
+
+    .check-item{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      padding:10px 10px;
+      border:1px solid var(--line);
+      border-radius:var(--radius-sm);
+      background:#fff;
+      transition:border .15s ease,background .15s ease,transform .08s ease;
+      min-width:0;
+    }
+
+    .check-item:hover{
+      border-color:rgba(255,138,61,.35);
+      background:#fffaf7;
+    }
+
+    .check-item:active{
+      transform:translateY(1px);
+    }
+
+    input[type="checkbox"]{
+      width:18px;
+      height:18px;
+      accent-color:var(--accent);
+      flex:0 0 18px;
+    }
+
+    .planner-shell{
+      display:grid;
+      gap:12px;
+    }
+
+    .planner-card{
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:14px;
+      background:linear-gradient(180deg,#fff,#fffaf7);
+    }
+
+    .planner-grid{
+      display:grid;
+      gap:12px;
+      grid-template-columns:1fr;
+    }
+
+    .planner-pair{
+      display:grid;
+      gap:12px;
+      grid-template-columns:1fr;
+    }
+
+    @media(min-width:760px){
+      .planner-grid{grid-template-columns:1fr 1fr}
+      .planner-pair{grid-template-columns:1fr 1fr}
+    }
+
+    .seg{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:8px;
+    }
+
+    .seg button{
+      width:100%;
+      padding:11px 10px;
+      border-radius:10px;
+      border:1px solid var(--line);
+      background:#fff;
+      color:var(--text);
+      font-weight:700;
+      cursor:pointer;
+    }
+
+    .seg button.active{
+      background:linear-gradient(135deg,var(--accent),#ffb36b);
+      color:#fff;
+      border-color:transparent;
+    }
+
+    .error{
+      color:var(--danger);
+      font-size:11.5px;
+      font-weight:700;
+      display:none;
+    }
+
+    .schedule-card{
+      background:#fff;
+      border-radius:12px;
+      border:1px solid rgba(17,24,39,.06);
+      box-shadow:0 10px 22px rgba(66,24,2,.06);
+      padding:10px;
+    }
+
+    .schedule-wrap{
+      border:1px solid var(--sched-grid);
+      border-radius:12px;
+      overflow:hidden;
+      background:#fff;
+    }
+
+    .schedule-scroll{
+      overflow-x:auto;
+      background:#fff;
+      width:100%;
+    }
+
+    table.schedule{
+      width:100%;
+      min-width:640px;
+      border-collapse:collapse;
+      table-layout:fixed;
+      font-variant-numeric:tabular-nums;
+      font-size:13px;
+    }
+
+    table.schedule th,
+    table.schedule td{
+      border:1px solid var(--sched-grid);
+      padding:0;
+      text-align:center;
+      background:#fff;
+    }
+
+    .th-time,
+    .td-time{
+      width:58px;
+      background:var(--sched-head);
+      font-size:12px;
+      font-weight:900;
+      color:#111827;
+    }
+
+    .th-date{
+      background:var(--sched-head);
+      font-size:12px;
+      font-weight:900;
+      color:#111827;
+      height:42px;
+    }
+
+    .time-label{
+      display:inline-block;
+      padding:12px 0;
+      line-height:1;
+      width:100%;
+      font-size:12px;
+    }
+
+    .slot-cell{
+      height:44px;
+      background:#fff;
+    }
+
+    .slot-btn{
+      width:100%;
+      height:44px;
+      border:none;
+      background:transparent;
+      cursor:pointer;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      position:relative;
+      -webkit-tap-highlight-color:transparent;
+    }
+
+    .slot-btn:not(.is-disabled):not(.is-selected):hover{
+      background:rgba(255,138,61,.08);
+    }
+
+    .slot-btn .circle{
+      width:18px;
+      height:18px;
+      border-radius:999px;
+      border:2px solid rgba(255,138,61,.85);
+      background:transparent;
+      display:inline-block;
+    }
+
+    .slot-btn .check{
+      width:20px;
+      height:20px;
+      display:none;
+      position:absolute;
+      left:50%;
+      top:50%;
+      transform:translate(-50%,-50%);
+      pointer-events:none;
+    }
+
+    .slot-btn .x{
+      display:none;
+      font-size:17px;
+      font-weight:900;
+      color:var(--sched-x);
+      opacity:.75;
+      line-height:1;
+    }
+
+    .slot-btn.is-selected{
+      background:linear-gradient(135deg,var(--accent),#ffb36b);
+    }
+
+    .slot-btn.is-selected .circle{display:none}
+    .slot-btn.is-selected .check{display:block}
+
+    .slot-btn.is-disabled{
+      cursor:not-allowed;
+      background:#fff;
+    }
+
+    .slot-btn.is-disabled .circle{display:none}
+    .slot-btn.is-disabled .x{display:block}
+
+    .schedule-inline-msg{
+      font-size:11.5px;
+      color:#556070;
+      font-weight:800;
+      display:none;
+      margin-top:10px;
+    }
+
+    .actions{
+      padding:18px 18px 22px;
+      display:grid;
+      gap:10px;
+    }
+
     .btn{
-      display:inline-flex; align-items:center; gap:10px;
-      background:linear-gradient(135deg, var(--brand), var(--brand2));
-      color:#04221b; font-weight:800; border:none; border-radius:12px; padding:12px 16px; text-decoration:none;
-      box-shadow: 0 8px 20px rgba(33,199,184,.28);
+      border:none;
+      border-radius:14px;
+      padding:14px 14px;
+      font-size:16px;
+      font-weight:800;
+      cursor:pointer;
+      transition:transform .08s ease,filter .15s ease,box-shadow .15s ease;
     }
-    .btn svg{width:18px; height:18px}
-    .mail{
-      display:inline-flex; align-items:center; gap:10px; padding:10px 12px; border-radius:12px;
-      border:1px solid var(--border); background:var(--card); color:var(--text); text-decoration:none;
+
+    .btn-primary{
+      background:linear-gradient(135deg,var(--accent),#ffb36b);
+      color:#fff;
+      box-shadow:0 10px 18px rgba(255,138,61,.22);
     }
-    footer{margin-top:40px; padding-top:20px; border-top:1px solid var(--border); color:var(--muted); font-size:.9rem}
-    .en{opacity:.85; font-weight:600; letter-spacing:.02em}
-    .sep{opacity:.25; padding:0 .3em}
+
+    .btn-primary:hover{filter:brightness(1.02)}
+    .btn-primary:active{transform:translateY(1px)}
+
+    .btn-ghost{
+      background:#fff;
+      border:1px solid var(--line);
+      color:#111827;
+    }
+
+    .thankyou-stage{
+      position:relative;
+      min-height:56vh;
+      display:none;
+      justify-content:center;
+      align-items:flex-start;
+      padding-top:10px;
+    }
+
+    .thankyou{
+      width:100%;
+      margin-top:10px;
+      background:linear-gradient(135deg,#fff,#fff 55%,var(--accent-soft));
+      border:1px solid var(--line);
+      border-radius:var(--radius-lg);
+      padding:34px 22px 26px;
+      box-shadow:var(--shadow);
+      text-align:center;
+    }
+
+    .done-badge{
+      width:54px;
+      height:54px;
+      border-radius:50%;
+      margin:0 auto 10px;
+      background:linear-gradient(135deg,#ffd9c5,#fff2ea);
+      border:1px solid rgba(255,138,61,.22);
+      display:grid;
+      place-items:center;
+      box-shadow:0 8px 16px rgba(66,24,2,.06);
+    }
+
+    .done-kicker{
+      font-size:11.5px;
+      font-weight:800;
+      color:var(--accent-2);
+      letter-spacing:.08em;
+      margin-bottom:2px;
+    }
+
+    .thankyou h2{
+      margin:0 0 12px;
+      font-size:clamp(22px,3.2vw,26px);
+    }
+
+    .thankyou-secondary{
+      font-size:12.5px;
+      color:#556070;
+      font-weight:700;
+      line-height:1.7;
+      margin:0;
+    }
+
+    footer{
+      padding:10px 18px 26px;
+      color:var(--muted);
+      font-size:11px;
+      text-align:center;
+    }
+
+    .admin-bar{display:none;margin-top:10px}
+    .admin-btn{
+      background:#111827;
+      color:#fff;
+      border:none;
+      border-radius:10px;
+      padding:10px 12px;
+      font-size:12px;
+      font-weight:700;
+      cursor:pointer;
+    }
   </style>
 </head>
 <body>
-  <header>
-    <div class="nav">
-      <a class="logo" href="#">
-        <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 12a8 8 0 1 0 16 0" stroke="currentColor" stroke-width="1.5"/><path d="M8 12a4 4 0 1 0 8 0" stroke="currentColor" stroke-width="1.5"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/></svg>
-        <span>Carnivore Coaching Hub</span>
-      </a>
-      <span class="pill">Crafted by Neo</span>
-    </div>
-  </header>
-
-  <main class="wrap">
-    <section class="hero">
-      <h1>あなたの体質と生活に“噛み合う”肉食設計。</h1>
-      <p>移行期のつまずきを防ぎ、最短で静かに適応へ。目的に応じて、カーニボア／ケトボア／TKDを最適化します。</p>
-    </section>
-
-    <section class="grid" aria-label="プランナーへの入口">
-      <!-- Adaptation / 移行食 -->
-      <a class="card" href="https://example.com/adaptation" target="_blank" rel="noopener noreferrer" title="移行食プランナーへ">
-        <!-- TODO: ↑ あなたの『Adaptation Planner, Crafted by Neo』のURLに変更 -->
-        <div class="ink" aria-hidden="true"></div>
-        <div class="body">
+  <div class="page">
+    <header>
+      <div class="header-inner">
+        <div class="brand">
+          <div class="brand-mark">🥩</div>
           <div>
-            <span class="eyebrow">移行期の“橋渡し”設計</span>
-            <h3 class="title">移行食プランナー</h3>
-            <p class="subtitle">
-              いきなり肉食に切り替える前の段階を戦略化。<br/>
-              離脱症状や体調不良を最小化し、静かに適応へ導きます。
-              <span class="sep">/</span>
-              <span class="en">Adaptation Planner, Crafted by Neo</span>
-            </p>
-          </div>
-          <div class="foot-row">
-            <span class="badge">公開版は一部数値をマスク</span>
-            <span class="cta">開く
-              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 17L17 7M17 7H9M17 7v8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-            </span>
+            <div>肉食コーチング診断フォーム</div>
+            <span class="brand-license">診断 → 設計 → 初回セッション予約</span>
           </div>
         </div>
-      </a>
-
-      <!-- Carnivore / 肉食 -->
-      <a class="card" href="https://example.com/carnivore" target="_blank" rel="noopener noreferrer" title="肉食プランナーへ">
-        <!-- TODO: ↑ あなたの『Carnivore Planner, Crafted by Neo』のURLに変更 -->
-        <div class="ink" aria-hidden="true"></div>
-        <div class="body">
-          <div>
-            <span class="eyebrow">適応後の“最適解”提示</span>
-            <h3 class="title">肉食プランナー</h3>
-            <p class="subtitle">
-              移行期を終えたら、<b>カーニボア／ケトボア／TKD</b>の3スタイルから選択。<br/>
-              目的と生活に合わせて、実行可能な設計を提示します。
-              <span class="sep">/</span>
-              <span class="en">Carnivore Planner, Crafted by Neo</span>
-            </p>
-          </div>
-          <div class="foot-row">
-            <span class="badge">公開版は一部数値をマスク</span>
-            <span class="cta">開く
-              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M7 17L17 7M17 7H9M17 7v8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-            </span>
-          </div>
-        </div>
-      </a>
-    </section>
-
-    <section class="note" aria-label="公開版の数値について">
-      <p><strong>表示数値について：</strong> 各プランナーの<strong>公開版では主要指標の数値を伏せています</strong>。<br/>
-      <strong>コーチング時には全数値を解放</strong>し、あなたの体質・生活に合わせて運用手順まで落とし込みます。疑問・質問は<strong>どんなテーマでもOK</strong>です。</p>
-    </section>
-
-    <section class="copy" aria-label="コーチングのご案内">
-      <h2>肉食を1から丁寧に。</h2>
-      <p class="lead">これから始めたい方、やってみたけどうまくいっていない方へ。<br>
-        <strong>あなたの体質・生活に合わせて、最適な肉食の形を一緒に作ります。</strong></p>
-
-      <p>肉食の疑問はもちろん、<strong>栄養・ホルモン・消化・肌・メンタル</strong>など、どんなテーマでもOK。<br>
-        <strong>LINE・メール・電話・Zoom・テキスト</strong>、あなたのやりやすい方法で、いつでも相談してください。</p>
-
-      <p>コーチング期間中は、<strong>24時間いつでもLINEで直接つながれる環境</strong>を用意。<br>
-        疑問や不安が浮かんだ瞬間に、すぐ解決できます。</p>
-
-      <p>―――<br>
-        “知識”ではなく、<strong>“体感で変わる”肉食へ。</strong><br>
-        あなたの変化を、最初から最後まで真摯にサポートします。</p>
-
-      <div class="contact">
-        <a class="btn"
-           href="mailto:neo653515@gmail.com?subject=%E3%82%B3%E3%83%BC%E3%83%81%E3%83%B3%E3%82%B0%E7%94%B3%E8%BE%BC%EF%BC%88Carnivore%20Coaching%20Hub%EF%BC%89&body=%E3%80%90%E3%81%8A%E5%90%8D%E5%89%8D%E3%80%91%0A%E3%80%90%E7%9B%AE%E6%A8%99%3A%20%E4%BE%8B%EF%BC%9A%E4%BD%93%E8%84%82%E7%99%BD%E6%B8%9B%E3%83%BB%E7%AD%8B%E5%8A%9Bup%20%E3%81%AA%E3%81%A9%E3%80%91%0A%E3%80%90%E7%8A%B6%E6%B3%81%3A%20%E4%BE%8B%EF%BC%9A%E7%8F%BE%E5%9C%A8%E3%81%AE%E9%A3%9F%E4%BA%8B%E3%83%BB%E4%BD%93%E8%AA%BF%E3%80%91%0A%E3%80%90%E5%84%AA%E5%85%88%E5%BA%A6%3A%20%E6%A0%BC%E5%A5%BD%E3%83%BB%E7%9D%A1%E7%9C%A0%E3%83%BB%E3%82%B9%E3%82%AD%E3%83%B3%20%E3%81%AA%E3%81%A9%E3%80%91%0A%E3%80%90%E8%A6%81%E6%9C%9B%E3%81%99%E3%82%8B%E3%82%B3%E3%83%9F%E3%83%A5%E3%83%8B%E3%82%B1%E3%83%BC%E3%82%B7%E3%83%A7%E3%83%B3%E6%96%B9%E5%BC%8F%3A%20LINE%E3%83%BB%E9%9B%BB%E8%A9%B1%E3%83%BBZoom%E3%83%BB%E3%83%86%E3%82%AD%E3%82%B9%E3%83%88%20%E3%81%AA%E3%81%A9%E3%80%91%0A%0A%E3%81%93%E3%81%93%E3%81%BE%E3%81%A7%E3%81%AE%E6%9B%B8%E5%BC%8F%E3%81%AF%E4%BF%AE%E6%AD%A3OK%E3%81%A7%E3%81%99%E3%80%82"
-           >
-          📩 ご相談・コーチングをメールで送る
-          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 6h16v12H4z" stroke="currentColor" stroke-width="1.5"/><path d="m4 7 8 6 8-6" stroke="currentColor" stroke-width="1.5"/></svg>
-        </a>
-        <a class="mail" href="mailto:neo653515@gmail.com">neo653515@gmail.com</a>
+        <div class="pill-note">第0回セッション</div>
       </div>
-    </section>
+    </header>
 
-    <footer>
-      <div>© <span id="y"></span> Crafted by Neo. All rights reserved.</div>
-    </footer>
-  </main>
+    <main class="container">
+      <section class="hero" id="heroSection">
+        <span class="meta">初回設計用の入力フォーム</span>
+        <h1>この入力で、
+あなたの身体は設計される。</h1>
+        <p>食事・体調・生活習慣・日程希望を先に整理します。
+このフォームは、ただの予約ではなく診断の入口です。</p>
+      </section>
 
+      <div class="thankyou-stage" id="thankYouStage">
+        <div style="width:100%;">
+          <section class="thankyou" id="thankYouSection">
+            <div class="done-badge" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="26" height="26">
+                <path fill="#ffffff" d="M9.0 16.2l-3.5-3.5a1 1 0 0 1 1.4-1.4l2.8 2.8 7.3-7.3a1 1 0 1 1 1.4 1.4l-8.0 8.0a1 1 0 0 1-1.4 0z"/>
+              </svg>
+            </div>
+            <div class="done-kicker">送信完了</div>
+            <h2>ありがとうございます</h2>
+            <p class="thankyou-secondary">内容を確認後、初回セッションに向けて整理します。<br>すでに身体のズレは見え始めています。</p>
+          </section>
+        </div>
+      </div>
+
+      <form id="coachingForm" novalidate>
+        <div class="section">
+          <div class="section-title">基本情報 <span class="req">必須</span></div>
+          <div class="field">
+            <label class="inline-label">LINEプロフィール名</label>
+            <input id="lineName" name="lineName" type="text" required />
+            <div class="error" data-error-for="lineName">LINEプロフィール名を入力してください。</div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="planner-shell">
+            <div class="planner-card">
+              <div class="planner-grid">
+                <div class="planner-pair">
+                  <div class="field">
+                    <label class="inline-label">性別</label>
+                    <select id="sex" name="sex" required>
+                      <option value="">選択してください</option>
+                      <option value="M">男性</option>
+                      <option value="F">女性</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <label class="inline-label">年齢</label>
+                    <input id="age" name="age" type="number" min="12" max="99" placeholder="例：30" required />
+                  </div>
+                </div>
+
+                <div class="planner-pair">
+                  <div class="field">
+                    <label class="inline-label">身長（cm）</label>
+                    <input id="height" name="height" type="number" min="120" max="220" placeholder="例：170" required />
+                  </div>
+                  <div class="field">
+                    <label class="inline-label">体重（kg）</label>
+                    <input id="weight" name="weight" type="number" min="30" max="250" placeholder="例：65" required />
+                  </div>
+                </div>
+
+                <div class="planner-pair">
+                  <div class="field">
+                    <label class="inline-label">1日の糖質量</label>
+                    <select id="currentCarb" name="currentCarb" required>
+                      <option value="">選択してください</option>
+                      <option value="under100">100g以下</option>
+                      <option value="100-150">100〜150g</option>
+                      <option value="150-200">150〜200g</option>
+                      <option value="200-250">200〜250g</option>
+                      <option value="250-300">250〜300g</option>
+                      <option value="300-400">300〜400g</option>
+                      <option value="400p">400g以上</option>
+                      <option value="unknown">わからない</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <label class="inline-label">運動習慣</label>
+                    <select id="habit" name="habit" required>
+                      <option value="">選択してください</option>
+                      <option value="1.2">ほぼ運動しない</option>
+                      <option value="1.375">週1〜2日</option>
+                      <option value="1.55">週3〜4日</option>
+                      <option value="1.725">週5〜6日</option>
+                      <option value="1.9">毎日/肉体労働</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="planner-pair" id="unknownCarbWrap" style="display:none;">
+                  <div class="field">
+                    <label class="inline-label">1日にお米を食べる量</label>
+                    <select id="riceSel" name="riceSel">
+                      <option value="">選択してください</option>
+                      <option>茶碗0〜1杯</option>
+                      <option>茶碗2〜3杯</option>
+                      <option>茶碗4〜5杯</option>
+                      <option>茶碗6杯以上</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <label class="inline-label">1日にパンを食べる量</label>
+                    <select id="breadSel" name="breadSel">
+                      <option value="">選択してください</option>
+                      <option>0〜1枚（個）</option>
+                      <option>2〜3枚（個）</option>
+                      <option>4〜5枚（個）</option>
+                      <option>6枚（個）以上</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="planner-pair">
+                  <div class="field" id="rootsWrap" style="display:none;">
+                    <label class="inline-label">1日に根菜を食べる量</label>
+                    <select id="rootsSel" name="rootsSel">
+                      <option value="">選択してください</option>
+                      <option>拳0〜1個分</option>
+                      <option>拳2〜3個分</option>
+                      <option>拳4〜5個分</option>
+                      <option>拳6個分以上</option>
+                    </select>
+                  </div>
+                  <div class="field">
+                    <label class="inline-label">フィットネス</label>
+                    <select id="fitnessType" name="fitnessType" required>
+                      <option value="">選択してください</option>
+                      <option value="none">該当なし</option>
+                      <option value="strength">筋トレ</option>
+                      <option value="run">ランニング</option>
+                      <option value="cycle">サイクリング</option>
+                      <option value="club">部活動</option>
+                      <option value="martial">格闘技</option>
+                      <option value="aerobic">その他（有酸素運動）</option>
+                      <option value="anaerobic">その他（無酸素運動）</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="planner-card">
+              <div class="field" style="margin-bottom:0;">
+                <label class="inline-label">目標</label>
+                <div class="seg" id="goalSeg">
+                  <button type="button" data-goal="cut">減量</button>
+                  <button type="button" data-goal="maintain" class="active">維持</button>
+                  <button type="button" data-goal="bulk">増量</button>
+                </div>
+                <input type="hidden" id="goal" name="goal" value="maintain" />
+              </div>
+            </div>
+          </div>
+
+          <div class="error" data-error-for="planner">設計の前提条件を入力してください。</div>
+        </div>
+
+        <div class="section">
+          <div class="section-title">現在の悩み <span class="req">必須</span></div>
+          <div class="section-sub">複数選択可</div>
+          <div class="checks">
+            <label class="check-item"><input type="checkbox" name="issues" value="肌荒れ">肌荒れ</label>
+            <label class="check-item"><input type="checkbox" name="issues" value="だるさ">だるさ</label>
+            <label class="check-item"><input type="checkbox" name="issues" value="集中力">集中力</label>
+            <label class="check-item"><input type="checkbox" name="issues" value="太りやすい">太りやすい</label>
+            <label class="check-item"><input type="checkbox" name="issues" value="不安定なメンタル">不安定なメンタル</label>
+            <label class="check-item"><input type="checkbox" id="issuesOtherChk" name="issues" value="その他">その他</label>
+          </div>
+
+          <div class="field" id="issuesOtherWrap" style="display:none;margin-top:12px;">
+            <label class="inline-label">その他の悩み</label>
+            <textarea id="issuesOtherText" name="issuesOtherText" placeholder="自由記述"></textarea>
+          </div>
+
+          <div class="error" data-error-for="issues">悩みを1つ以上選択してください。</div>
+        </div>
+
+        <div class="section">
+          <div class="section-title">現在の食事 <span class="req">必須</span></div>
+          <div class="grid-2">
+            <div class="field">
+              <label class="inline-label">1日の食事内容（ざっくり）</label>
+              <textarea id="dailyMeals" name="dailyMeals" required placeholder="例：朝はパンとコーヒー、昼は外食、夜はご飯多め など"></textarea>
+              <div class="error" data-error-for="dailyMeals">1日の食事内容を入力してください。</div>
+            </div>
+            <div class="field">
+              <label class="inline-label">よく食べるもの</label>
+              <textarea id="favoriteFoods" name="favoriteFoods" required placeholder="例：ラーメン、アイス、ヨーグルト、鶏胸肉 など"></textarea>
+              <div class="error" data-error-for="favoriteFoods">よく食べるものを入力してください。</div>
+            </div>
+          </div>
+
+          <div class="grid-2">
+            <div class="field">
+              <label class="inline-label">間食・飲み物</label>
+              <textarea id="snacksDrinks" name="snacksDrinks" required placeholder="例：カフェラテ、エナジードリンク、お菓子 など"></textarea>
+              <div class="error" data-error-for="snacksDrinks">間食・飲み物を入力してください。</div>
+            </div>
+            <div class="field">
+              <label class="inline-label">外食頻度</label>
+              <select id="eatingOut" name="eatingOut" required>
+                <option value="">選択してください</option>
+                <option>ほぼしない</option>
+                <option>週1〜2回</option>
+                <option>週3〜4回</option>
+                <option>週5回以上</option>
+              </select>
+              <div class="error" data-error-for="eatingOut">外食頻度を選択してください。</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-title">生活習慣 <span class="req">必須</span></div>
+          <div class="grid-3">
+            <div class="field">
+              <label class="inline-label">睡眠時間</label>
+              <select id="sleepHours" name="sleepHours" required>
+                <option value="">選択してください</option>
+                <option>5時間未満</option>
+                <option>5〜6時間</option>
+                <option>6〜7時間</option>
+                <option>7〜8時間</option>
+                <option>8時間以上</option>
+              </select>
+            </div>
+            <div class="field">
+              <label class="inline-label">運動習慣（主観）</label>
+              <select id="exerciseFeel" name="exerciseFeel" required>
+                <option value="">選択してください</option>
+                <option>ほぼ動かない</option>
+                <option>少し動く</option>
+                <option>定期的に運動</option>
+                <option>かなり運動する</option>
+              </select>
+            </div>
+            <div class="field">
+              <label class="inline-label">ストレス（主観）</label>
+              <select id="stressLevel" name="stressLevel" required>
+                <option value="">選択してください</option>
+                <option>低い</option>
+                <option>やや低い</option>
+                <option>普通</option>
+                <option>やや高い</option>
+                <option>高い</option>
+              </select>
+            </div>
+          </div>
+          <div class="error" data-error-for="lifestyle">生活習慣の項目を埋めてください。</div>
+        </div>
+
+        <div class="section">
+          <div class="section-title">今の思い・モチベーション <span class="req">必須</span></div>
+          <div class="grid-2">
+            <div class="field">
+              <label class="inline-label">食事をどれくらい変えられそうか</label>
+              <div class="seg" id="changeSeg">
+                <button type="button" data-change="すぐ変えたい">すぐ変えたい</button>
+                <button type="button" data-change="徐々に変えたい" class="active">徐々に変えたい</button>
+                <button type="button" data-change="正直あまり変えたくない">正直あまり変えたくない</button>
+              </div>
+              <input type="hidden" id="changeTolerance" name="changeTolerance" value="徐々に変えたい" />
+            </div>
+
+            <div class="field">
+              <label class="inline-label">モチベーション</label>
+              <div class="seg" id="motivationSeg">
+                <button type="button" data-motivation="軽く試したい">軽く試したい</button>
+                <button type="button" data-motivation="変わりたい" class="active">変わりたい</button>
+                <button type="button" data-motivation="本気で変える">本気で変える</button>
+              </div>
+              <input type="hidden" id="motivation" name="motivation" value="変わりたい" />
+            </div>
+          </div>
+
+          <div class="field">
+            <label class="inline-label">このプログラムに期待すること</label>
+            <textarea id="expectation" name="expectation" required placeholder="例：肌を整えたい、体重を増やしたい、ブレない食事設計がほしい"></textarea>
+            <div class="error" data-error-for="expectation">期待することを入力してください。</div>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-title">初回セッション希望日時 <span class="req">必須</span></div>
+          <div class="section-sub">最大3枠まで選択できます。埋まった枠は次回から×表示になります。</div>
+
+          <div class="schedule-card">
+            <div class="schedule-wrap">
+              <div class="schedule-scroll">
+                <table class="schedule" id="scheduleTable" role="grid" aria-label="初回セッション希望日時"></table>
+              </div>
+            </div>
+            <div class="schedule-inline-msg" id="scheduleMsg"></div>
+            <div class="error" data-error-for="schedule">希望日時を1つ以上選択してください。</div>
+          </div>
+
+          <input type="hidden" id="selectedSlots" name="selectedSlots" value="" />
+
+          <div class="admin-bar" id="adminBar">
+            <button class="admin-btn" type="button" id="resetReservedBtn">予約枠を全リセット</button>
+          </div>
+        </div>
+
+        <div class="section">
+          <div class="section-title">利用規約・確認事項 <span class="req">必須</span></div>
+          <div class="checks" style="grid-template-columns:1fr;">
+            <label class="check-item">
+              <input type="checkbox" id="agreeMedical" name="agreeMedical" value="yes">
+              これは医学的助言ではなく、一般的な情報提供と食事設計サポートであることに同意します
+            </label>
+            <label class="check-item">
+              <input type="checkbox" id="agreeTerms" name="agreeTerms" value="yes">
+              <a href="https://neocarnivore.myshopify.com/policies/terms-of-service" target="_blank" rel="noopener" style="color:var(--accent-2);font-weight:700;text-decoration:underline;">利用規約</a> を確認し、自己責任で取り組むことに同意します
+            </label>
+          </div>
+          <div class="error" data-error-for="agreement">同意チェックが必要です。</div>
+        </div>
+
+        <div class="actions">
+          <button class="btn btn-primary" type="submit">診断を送信する</button>
+          <button class="btn btn-ghost" type="reset">入力をリセット</button>
+          <div id="formMsg" class="hint"></div>
+        </div>
+      </form>
+    </main>
+
+    <footer>GitHubにこのHTMLをそのまま置いて動かせる単一ファイルです。送信処理は EmailJS 前提です。</footer>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <script>
-    // 年号の自動更新
-    document.getElementById('y').textContent = new Date().getFullYear();
+    (() => {
+      const CONFIG = {
+        EMAILJS_PUBLIC_KEY: "REPLACE_PUBLIC_KEY",
+        EMAILJS_SERVICE_ID: "REPLACE_SERVICE_ID",
+        EMAILJS_TEMPLATE_ID: "REPLACE_TEMPLATE_ID",
+        ADMIN_RESET_KEY: "neo-reset-slots",
+        RESERVED_KEY: "coaching_reserved_slots_v1",
+        SELECTED_LIMIT: 3
+      };
+
+      const form = document.getElementById("coachingForm");
+      const msg = document.getElementById("formMsg");
+      const hero = document.getElementById("heroSection");
+      const thankYouStage = document.getElementById("thankYouStage");
+
+      const showError = (name, on) => {
+        const el = document.querySelector(`[data-error-for="${name}"]`);
+        if (el) el.style.display = on ? "block" : "none";
+      };
+
+      const getCheckedValues = (selector) =>
+        [...document.querySelectorAll(selector)].filter(el => el.checked).map(el => el.value);
+
+      const bindSeg = (wrapId, hiddenId, key) => {
+        const wrap = document.getElementById(wrapId);
+        const hidden = document.getElementById(hiddenId);
+        if (!wrap || !hidden) return;
+
+        wrap.addEventListener("click", (e) => {
+          const btn = e.target.closest("button");
+          if (!btn) return;
+          wrap.querySelectorAll("button").forEach(b => b.classList.remove("active"));
+          btn.classList.add("active");
+          hidden.value = btn.dataset[key] || "";
+        });
+      };
+
+      bindSeg("goalSeg", "goal", "goal");
+      bindSeg("changeSeg", "changeTolerance", "change");
+      bindSeg("motivationSeg", "motivation", "motivation");
+
+      const currentCarb = document.getElementById("currentCarb");
+      const unknownCarbWrap = document.getElementById("unknownCarbWrap");
+      const rootsWrap = document.getElementById("rootsWrap");
+
+      currentCarb.addEventListener("change", () => {
+        const show = currentCarb.value === "unknown";
+        unknownCarbWrap.style.display = show ? "grid" : "none";
+        rootsWrap.style.display = show ? "grid" : "none";
+      });
+
+      const issuesOtherChk = document.getElementById("issuesOtherChk");
+      const issuesOtherWrap = document.getElementById("issuesOtherWrap");
+      const issuesOtherText = document.getElementById("issuesOtherText");
+
+      const syncOtherIssue = () => {
+        const show = issuesOtherChk.checked;
+        issuesOtherWrap.style.display = show ? "grid" : "none";
+        if (!show) issuesOtherText.value = "";
+      };
+      issuesOtherChk.addEventListener("change", syncOtherIssue);
+      syncOtherIssue();
+
+      const scheduleTable = document.getElementById("scheduleTable");
+      const scheduleMsg = document.getElementById("scheduleMsg");
+      const selectedSlotsInput = document.getElementById("selectedSlots");
+      const adminBar = document.getElementById("adminBar");
+      const resetReservedBtn = document.getElementById("resetReservedBtn");
+
+      const pad2 = (n) => String(n).padStart(2, "0");
+      const clone = (d) => new Date(d.getTime());
+      const startOfDay = (d) => { const x = clone(d); x.setHours(0,0,0,0); return x; };
+      const addDays = (d, days) => { const x = clone(d); x.setDate(x.getDate() + days); return x; };
+      const dayKey = (d) => `${d.getFullYear()}-${pad2(d.getMonth()+1)}-${pad2(d.getDate())}`;
+      const fmtMD = (d) => `${pad2(d.getMonth()+1)}/${pad2(d.getDate())}`;
+      const parseHHMM = (hhmm) => { const [h,m] = hhmm.split(":").map(Number); return {h,m}; };
+      const buildTimeList = (startHHMM, endHHMM, stepMin) => {
+        const s = parseHHMM(startHHMM);
+        const e = parseHHMM(endHHMM);
+        const list = [];
+        let cur = s.h * 60 + s.m;
+        const end = e.h * 60 + e.m;
+        while (cur <= end) {
+          list.push({h: Math.floor(cur / 60), m: cur % 60});
+          cur += stepMin;
+        }
+        return list;
+      };
+
+      const now = new Date();
+      const DAYS = 7;
+      const days = Array.from({length: DAYS}, (_, i) => startOfDay(addDays(now, i)));
+      const times = buildTimeList("10:30", "18:30", 30);
+
+      const selectedSlots = new Set();
+      let reservedSlots = new Set(JSON.parse(localStorage.getItem(CONFIG.RESERVED_KEY) || "[]"));
+
+      const showInlineMsg = (text) => {
+        if (!text) {
+          scheduleMsg.style.display = "none";
+          scheduleMsg.textContent = "";
+          return;
+        }
+        scheduleMsg.style.display = "block";
+        scheduleMsg.textContent = text;
+      };
+
+      const syncSelectedInput = () => {
+        selectedSlotsInput.value = JSON.stringify([...selectedSlots]);
+      };
+
+      const slotId = (dateKey, hhmm) => `${dateKey} ${hhmm}`;
+
+      const renderSchedule = () => {
+        scheduleTable.innerHTML = "";
+
+        const thead = document.createElement("thead");
+        const trh = document.createElement("tr");
+
+        const th0 = document.createElement("th");
+        th0.className = "th-time";
+        th0.textContent = "時間";
+        trh.appendChild(th0);
+
+        days.forEach(d => {
+          const th = document.createElement("th");
+          th.className = "th-date";
+          th.textContent = fmtMD(d);
+          trh.appendChild(th);
+        });
+
+        thead.appendChild(trh);
+        scheduleTable.appendChild(thead);
+
+        const tbody = document.createElement("tbody");
+
+        times.forEach(t => {
+          const tr = document.createElement("tr");
+
+          const tdTime = document.createElement("td");
+          tdTime.className = "td-time";
+          const span = document.createElement("span");
+          span.className = "time-label";
+          span.textContent = `${pad2(t.h)}:${pad2(t.m)}`;
+          tdTime.appendChild(span);
+          tr.appendChild(tdTime);
+
+          days.forEach(d => {
+            const td = document.createElement("td");
+            td.className = "slot-cell";
+
+            const btn = document.createElement("button");
+            btn.type = "button";
+            btn.className = "slot-btn";
+
+            const id = slotId(dayKey(d), `${pad2(t.h)}:${pad2(t.m)}`);
+
+            const circle = document.createElement("span");
+            circle.className = "circle";
+
+            const x = document.createElement("span");
+            x.className = "x";
+            x.textContent = "×";
+
+            const check = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+            check.setAttribute("class", "check");
+            check.setAttribute("viewBox", "0 0 24 24");
+            check.innerHTML = '<path fill="#fff" d="M9.0 16.2l-3.5-3.5a1 1 0 0 1 1.4-1.4l2.8 2.8 7.3-7.3a1 1 0 1 1 1.4 1.4l-8.0 8.0a1 1 0 0 1-1.4 0z"/>';
+
+            btn.append(circle, x, check);
+
+            if (reservedSlots.has(id)) {
+              btn.classList.add("is-disabled");
+              btn.disabled = true;
+            }
+
+            if (selectedSlots.has(id)) {
+              btn.classList.add("is-selected");
+            }
+
+            btn.addEventListener("click", () => {
+              showInlineMsg("");
+              if (btn.disabled) return;
+
+              if (selectedSlots.has(id)) {
+                selectedSlots.delete(id);
+                btn.classList.remove("is-selected");
+              } else {
+                if (selectedSlots.size >= CONFIG.SELECTED_LIMIT) {
+                  showInlineMsg("※希望日時は最大3枠までです");
+                  return;
+                }
+                selectedSlots.add(id);
+                btn.classList.add("is-selected");
+              }
+
+              syncSelectedInput();
+              showError("schedule", selectedSlots.size === 0);
+            });
+
+            td.appendChild(btn);
+            tr.appendChild(td);
+          });
+
+          tbody.appendChild(tr);
+        });
+
+        scheduleTable.appendChild(tbody);
+      };
+
+      const isAdminMode = () => {
+        const url = new URL(location.href);
+        return url.searchParams.get("admin") === CONFIG.ADMIN_RESET_KEY || location.hash === `#${CONFIG.ADMIN_RESET_KEY}`;
+      };
+
+      if (isAdminMode()) adminBar.style.display = "block";
+
+      resetReservedBtn.addEventListener("click", () => {
+        localStorage.removeItem(CONFIG.RESERVED_KEY);
+        reservedSlots = new Set();
+        selectedSlots.clear();
+        syncSelectedInput();
+        renderSchedule();
+        showInlineMsg("予約枠を全リセットしました");
+      });
+
+      renderSchedule();
+
+      const validatePlanner = () => {
+        const ids = ["sex","age","height","weight","currentCarb","habit","fitnessType","goal"];
+        for (const id of ids) {
+          const el = document.getElementById(id);
+          if (!el || !String(el.value || "").trim()) return false;
+        }
+
+        if (currentCarb.value === "unknown") {
+          if (!document.getElementById("riceSel").value.trim()) return false;
+          if (!document.getElementById("breadSel").value.trim()) return false;
+          if (!document.getElementById("rootsSel").value.trim()) return false;
+        }
+
+        return true;
+      };
+
+      const validateAll = () => {
+        let ok = true;
+
+        [
+          "lineName","planner","issues","dailyMeals","favoriteFoods","snacksDrinks",
+          "eatingOut","lifestyle","expectation","schedule","agreement"
+        ].forEach(k => showError(k, false));
+
+        if (!form.lineName.value.trim()) {
+          showError("lineName", true);
+          ok = false;
+        }
+
+        if (!validatePlanner()) {
+          showError("planner", true);
+          ok = false;
+        }
+
+        if (getCheckedValues('input[name="issues"]').length === 0) {
+          showError("issues", true);
+          ok = false;
+        }
+
+        if (issuesOtherChk.checked && !issuesOtherText.value.trim()) {
+          showError("issues", true);
+          ok = false;
+        }
+
+        if (!form.dailyMeals.value.trim()) {
+          showError("dailyMeals", true);
+          ok = false;
+        }
+
+        if (!form.favoriteFoods.value.trim()) {
+          showError("favoriteFoods", true);
+          ok = false;
+        }
+
+        if (!form.snacksDrinks.value.trim()) {
+          showError("snacksDrinks", true);
+          ok = false;
+        }
+
+        if (!form.eatingOut.value.trim()) {
+          showError("eatingOut", true);
+          ok = false;
+        }
+
+        const lifestyleOk = ["sleepHours","exerciseFeel","stressLevel"].every(id =>
+          document.getElementById(id).value.trim()
+        );
+        if (!lifestyleOk) {
+          showError("lifestyle", true);
+          ok = false;
+        }
+
+        if (!form.expectation.value.trim()) {
+          showError("expectation", true);
+          ok = false;
+        }
+
+        if (selectedSlots.size === 0) {
+          showError("schedule", true);
+          ok = false;
+        }
+
+        const agreeMedical = document.getElementById("agreeMedical").checked;
+        const agreeTerms = document.getElementById("agreeTerms").checked;
+        if (!(agreeMedical && agreeTerms)) {
+          showError("agreement", true);
+          ok = false;
+        }
+
+        return ok;
+      };
+
+      const buildTemplateParams = () => {
+        const issues = getCheckedValues('input[name="issues"]');
+        const issuesText = issuesOtherChk.checked && issuesOtherText.value.trim()
+          ? `｜その他：${issuesOtherText.value.trim()}`
+          : "";
+
+        return {
+          line_name: form.lineName.value.trim(),
+          sex: form.sex.value,
+          age: form.age.value,
+          height: form.height.value,
+          weight: form.weight.value,
+          current_carb: form.currentCarb.value,
+          rice_sel: form.riceSel.value || "",
+          bread_sel: form.breadSel.value || "",
+          roots_sel: form.rootsSel.value || "",
+          habit: form.habit.value,
+          fitness_type: form.fitnessType.value,
+          goal: form.goal.value,
+          issues: issues.join(" / ") + issuesText,
+          daily_meals: form.dailyMeals.value.trim(),
+          favorite_foods: form.favoriteFoods.value.trim(),
+          snacks_drinks: form.snacksDrinks.value.trim(),
+          eating_out: form.eatingOut.value,
+          sleep_hours: form.sleepHours.value,
+          exercise_feel: form.exerciseFeel.value,
+          stress_level: form.stressLevel.value,
+          change_tolerance: form.changeTolerance.value,
+          motivation: form.motivation.value,
+          expectation: form.expectation.value.trim(),
+          selected_slots: [...selectedSlots].join(" / "),
+          submitted_at: new Date().toLocaleString("ja-JP")
+        };
+      };
+
+      const showThankYouView = () => {
+        hero.style.display = "none";
+        form.style.display = "none";
+        thankYouStage.style.display = "flex";
+        window.scrollTo({top: 0, behavior: "auto"});
+      };
+
+      const initEmailJs = () => {
+        if (
+          CONFIG.EMAILJS_PUBLIC_KEY &&
+          !CONFIG.EMAILJS_PUBLIC_KEY.startsWith("REPLACE_") &&
+          window.emailjs
+        ) {
+          emailjs.init({ publicKey: CONFIG.EMAILJS_PUBLIC_KEY });
+          return true;
+        }
+        return false;
+      };
+
+      const emailReady = initEmailJs();
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        msg.textContent = "";
+
+        if (!validateAll()) return;
+
+        const submitBtn = form.querySelector('button[type="submit"]');
+        submitBtn.disabled = true;
+        msg.textContent = "送信中です…";
+
+        try {
+          const params = buildTemplateParams();
+
+          if (!emailReady || CONFIG.EMAILJS_SERVICE_ID.startsWith("REPLACE_") || CONFIG.EMAILJS_TEMPLATE_ID.startsWith("REPLACE_")) {
+            throw new Error("EmailJS設定が未完了です");
+          }
+
+          await emailjs.send(CONFIG.EMAILJS_SERVICE_ID, CONFIG.EMAILJS_TEMPLATE_ID, params);
+
+          reservedSlots = new Set([...reservedSlots, ...selectedSlots]);
+          localStorage.setItem(CONFIG.RESERVED_KEY, JSON.stringify([...reservedSlots]));
+
+          msg.textContent = "送信が完了しました。";
+          showThankYouView();
+        } catch (err) {
+          console.error(err);
+          msg.textContent = "送信に失敗しました。EmailJS設定または通信環境をご確認ください。";
+          alert("送信に失敗しました。HTML内の EmailJS 設定値を確認してください。");
+        } finally {
+          submitBtn.disabled = false;
+        }
+      });
+
+      form.addEventListener("reset", () => {
+        [
+          "lineName","planner","issues","dailyMeals","favoriteFoods","snacksDrinks",
+          "eatingOut","lifestyle","expectation","schedule","agreement"
+        ].forEach(k => showError(k, false));
+
+        msg.textContent = "";
+        showInlineMsg("");
+
+        selectedSlots.clear();
+        syncSelectedInput();
+
+        unknownCarbWrap.style.display = "none";
+        rootsWrap.style.display = "none";
+        issuesOtherWrap.style.display = "none";
+
+        document.getElementById("goal").value = "maintain";
+        document.getElementById("changeTolerance").value = "徐々に変えたい";
+        document.getElementById("motivation").value = "変わりたい";
+
+        document.querySelectorAll("#goalSeg button").forEach((b, i) => b.classList.toggle("active", i === 1));
+        document.querySelectorAll("#changeSeg button").forEach((b, i) => b.classList.toggle("active", i === 1));
+        document.querySelectorAll("#motivationSeg button").forEach((b, i) => b.classList.toggle("active", i === 1));
+
+        setTimeout(() => {
+          renderSchedule();
+          syncOtherIssue();
+        }, 0);
+      });
+
+      form.lineName.addEventListener("input", () => showError("lineName", false));
+      form.dailyMeals.addEventListener("input", () => showError("dailyMeals", false));
+      form.favoriteFoods.addEventListener("input", () => showError("favoriteFoods", false));
+      form.snacksDrinks.addEventListener("input", () => showError("snacksDrinks", false));
+      form.expectation.addEventListener("input", () => showError("expectation", false));
+
+      document.querySelectorAll('input[name="issues"]').forEach(el =>
+        el.addEventListener("change", () => showError("issues", false))
+      );
+
+      issuesOtherText.addEventListener("input", () => showError("issues", false));
+      document.getElementById("agreeMedical").addEventListener("change", () => showError("agreement", false));
+      document.getElementById("agreeTerms").addEventListener("change", () => showError("agreement", false));
+
+      ["sleepHours","exerciseFeel","stressLevel"].forEach(id => {
+        document.getElementById(id).addEventListener("change", () => showError("lifestyle", false));
+      });
+
+      ["sex","age","height","weight","currentCarb","habit","fitnessType","goal","riceSel","breadSel","rootsSel"].forEach(id => {
+        document.getElementById(id).addEventListener("change", () => showError("planner", false));
+        document.getElementById(id).addEventListener("input", () => showError("planner", false));
+      });
+    })();
   </script>
 </body>
 </html>
