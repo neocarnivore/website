@@ -350,6 +350,24 @@
       gap:12px;
       grid-template-columns:1fr;
     }
+    
+    .basic-pair{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  column-gap:36px;
+  row-gap:18px;
+  align-items:start;
+}
+
+.basic-pair .field{
+  margin-bottom:0;
+}
+
+@media (max-width:719px){
+  .basic-pair{
+    column-gap:18px;
+  }
+}
 
     @media (min-width:760px){
       .planner-pair{grid-template-columns:1fr 1fr;}
@@ -793,11 +811,7 @@
                   <input id="lineName" name="lineName" type="text" required />
                 </div>
 
-                <div class="planner-pair">
-  <div class="field">
-    <label class="inline-label">年齢</label>
-    <input id="age" name="age" type="number" inputmode="numeric" step="1" min="12" max="99" placeholder="例：30" required />
-  </div>
+                <div class="basic-pair">
   <div class="field">
     <label class="inline-label">性別</label>
     <select id="sex" name="sex" required>
@@ -806,9 +820,13 @@
       <option value="F">女性</option>
     </select>
   </div>
+  <div class="field">
+    <label class="inline-label">年齢（歳）</label>
+    <input id="age" name="age" type="number" inputmode="numeric" step="1" min="12" max="99" placeholder="例：30" required />
+  </div>
 </div>
 
-                <div class="planner-pair">
+                <div class="basic-pair">
   <div class="field">
     <label class="inline-label">身長（cm）</label>
     <input id="height" name="height" type="number" inputmode="numeric" step="0.1" min="120" max="220" placeholder="例：170" required />
@@ -935,8 +953,7 @@
           </div>
 
           <div class="field" id="issuesOtherWrap" style="display:none;margin-top:12px;">
-            <label class="inline-label">具体的に記述してください</label>
-            <textarea id="issuesOtherText" name="issuesOtherText" placeholder="具体的に記述してください"></textarea>
+                   <textarea id="issuesOtherText" name="issuesOtherText" placeholder="具体的に記述してください"></textarea>
           </div>
 
           <div class="error" data-error-for="issues">悩みを1つ以上選択してください。</div>
@@ -1050,8 +1067,7 @@
             </div>
 
             <div class="field" id="currentDiseaseTextWrap" style="display:none;">
-              <label class="inline-label">具体的に記述してください</label>
-              <textarea id="currentDiseaseText" name="currentDiseaseText" placeholder="具体的に記述してください"></textarea>
+                            <textarea id="currentDiseaseText" name="currentDiseaseText" placeholder="具体的に記述してください"></textarea>
             </div>
           </div>
 
@@ -1066,8 +1082,7 @@
             </div>
 
             <div class="field" id="pastDiseaseTextWrap" style="display:none;">
-              <label class="inline-label">具体的に記述してください</label>
-              <textarea id="pastDiseaseText" name="pastDiseaseText" placeholder="具体的に記述してください"></textarea>
+                            <textarea id="pastDiseaseText" name="pastDiseaseText" placeholder="具体的に記述してください"></textarea>
             </div>
           </div>
 
@@ -1082,8 +1097,7 @@
             </div>
 
             <div class="field" id="medicationTextWrap" style="display:none;">
-              <label class="inline-label">具体的に記述してください</label>
-              <textarea id="medicationText" name="medicationText" placeholder="具体的に記述してください"></textarea>
+                            <textarea id="medicationText" name="medicationText" placeholder="具体的に記述してください"></textarea>
             </div>
           </div>
 
@@ -1098,8 +1112,7 @@
             </div>
 
             <div class="field" id="supplementTextWrap" style="display:none;">
-              <label class="inline-label">具体的に記述してください</label>
-              <textarea id="supplementText" name="supplementText" placeholder="具体的に記述してください"></textarea>
+                            <textarea id="supplementText" name="supplementText" placeholder="具体的に記述してください"></textarea>
             </div>
           </div>
 
@@ -1120,27 +1133,27 @@
         <div class="section">
           <div class="section-title">現在の思い <span class="req">必須</span></div>
 
-          <div class="grid-2">
-            <div class="field">
-              <label class="inline-label">食事をどれくらい変えられそうか</label>
-              <div class="seg" id="changeSeg">
-                <button type="button" data-change="すぐ変えたい">すぐ変えたい</button>
-                <button type="button" data-change="徐々に変えたい" class="active">徐々に変えたい</button>
-                <button type="button" data-change="正直変えたくない">正直変えたくない</button>
-              </div>
-              <input type="hidden" id="changeTolerance" name="changeTolerance" value="徐々に変えたい" />
-            </div>
+          <div class="grid-2" style="align-items:start;column-gap:12px;">
+  <div class="field" style="margin-top:8px;">
+    <label class="inline-label">食事をどれくらい変えられそうか</label>
+    <div class="seg" id="changeSeg">
+      <button type="button" data-change="すぐ変えたい">すぐ変えたい</button>
+      <button type="button" data-change="徐々に変えたい" class="active">徐々に変えたい</button>
+      <button type="button" data-change="正直変えたくない">正直変えたくない</button>
+    </div>
+    <input type="hidden" id="changeTolerance" name="changeTolerance" value="徐々に変えたい" />
+  </div>
 
-            <div class="field">
-              <label class="inline-label">モチベーション</label>
-              <div class="seg" id="motivationSeg">
-                <button type="button" data-motivation="軽く試したい">軽く試したい</button>
-                <button type="button" data-motivation="変わりたい" class="active">変わりたい</button>
-                <button type="button" data-motivation="本気で変える">本気で変える</button>
-              </div>
-              <input type="hidden" id="motivation" name="motivation" value="変わりたい" />
-            </div>
-          </div>
+  <div class="field">
+    <label class="inline-label">モチベーション</label>
+    <div class="seg" id="motivationSeg">
+      <button type="button" data-motivation="軽く試したい">軽く試したい</button>
+      <button type="button" data-motivation="変わりたい" class="active">変わりたい</button>
+      <button type="button" data-motivation="本気で変える">本気で変える</button>
+    </div>
+    <input type="hidden" id="motivation" name="motivation" value="変わりたい" />
+  </div>
+</div>
 
           <div class="field">
             <label class="inline-label">期待すること</label>
@@ -1151,8 +1164,8 @@
 
         <div class="section">
           <div class="section-title">初回ミーティング希望日時 <span class="req">必須</span></div>
-          <div class="section-sub">1枠あたり30分ほどのzoomミーティング。
-最大3枠まで選択でき、内容を確認のうえ最終日時を決定します。</div>
+          <div class="section-sub">1枠あたり30分ほどのzoomミーティングです。
+最大3枠まで選択でき、内容を確認のうえLINEよりご連絡します。</div>
 
           <div class="schedule-card">
             <div class="schedule-wrap">
@@ -1382,20 +1395,20 @@
       const slotId = (dateKeyValue, hhmm) => `${dateKeyValue} ${hhmm}`;
 
       const isDisabledByRule = (dateKeyValue, timeLabel) => {
-        const baseNow = new Date();
-        const todayKey = dayKey(baseNow);
-        const tomorrowKey = dayKey(addDays(startOfDay(baseNow), 1));
+  const baseNow = new Date();
+  const todayKey = dayKey(baseNow);
+  const tomorrowKey = dayKey(addDays(startOfDay(baseNow), 1));
 
-        if (dateKeyValue === todayKey) return true;
+  if (dateKeyValue === todayKey) return true;
 
-        const {h, m} = parseHHMM(timeLabel);
-        const totalMin = h * 60 + m;
+  const {h, m} = parseHHMM(timeLabel);
+  const totalMin = h * 60 + m;
 
-        if (dateKeyValue === tomorrowKey && totalMin <= 12 * 60) {
-          return true;
-        }
-        return false;
-      };
+  if (dateKeyValue === tomorrowKey && (totalMin <= 12 * 60 || totalMin >= 17 * 60)) {
+    return true;
+  }
+  return false;
+};
 
       const renderSchedule = () => {
         DAYS = calcDaysCount();
