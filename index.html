@@ -1386,7 +1386,7 @@
 
       const calcDaysCount = () => {
         const w = Math.min(window.innerWidth || 375, document.documentElement.clientWidth || 375);
-        if (w <= 390) return 5;
+        if (w < 390) return 5;
         if (w <= 520) return 6;
         return 7;
       };
