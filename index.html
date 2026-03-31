@@ -1184,7 +1184,7 @@
               </div>
             </div>
             <div class="schedule-inline-msg" id="scheduleMsg"></div>
-            <div class="error" data-error-for="schedule">希望日時を1つ以上選択してください。</div>
+            <div class="error" data-error-for="schedule">希望日時を2つ以上選択してください。</div>
           </div>
 
           <input type="hidden" id="selectedSlots" name="selectedSlots" value="" />
@@ -1657,10 +1657,10 @@
           ok = false;
         }
 
-        if (selectedSlots.size === 0) {
-          showError("schedule", true);
-          ok = false;
-        }
+        if (selectedSlots.size < 2) {
+  showError("schedule", true);
+  ok = false;
+}
 
         if (!document.getElementById("agreeTerms").checked) {
           showError("agreement", true);
