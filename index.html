@@ -1219,13 +1219,13 @@
   <script>
     (() => {
       const CONFIG = {
-        EMAILJS_PUBLIC_KEY: "REPLACE_PUBLIC_KEY",
-        EMAILJS_SERVICE_ID: "REPLACE_SERVICE_ID",
-        EMAILJS_TEMPLATE_ID: "REPLACE_TEMPLATE_ID",
-        ADMIN_RESET_KEY: "neo-reset-slots",
-        RESERVED_KEY: "coaching_reserved_slots_v2",
-        SELECTED_LIMIT: 3
-      };
+  EMAILJS_PUBLIC_KEY: "QedlQxUXH2yDJJvjU",
+  EMAILJS_SERVICE_ID: "service_sgac4or",
+  EMAILJS_TEMPLATE_ID: "template_8rakpen",
+  ADMIN_RESET_KEY: "neo-reset-slots",
+  RESERVED_KEY: "coaching_reserved_slots_v2",
+  SELECTED_LIMIT: 3
+};
 
       const form = document.getElementById("coachingForm");
       const msg = document.getElementById("formMsg");
@@ -1671,51 +1671,81 @@
       };
 
       const buildTemplateParams = () => {
-        const issues = getCheckedValues('input[name="issues"]');
-        const issuesText = issuesOtherChk.checked && issuesOtherText.value.trim()
-          ? `｜その他：${issuesOtherText.value.trim()}`
-          : "";
+  const issues = getCheckedValues('input[name="issues"]');
+  const issuesText = issuesOtherChk.checked && issuesOtherText.value.trim()
+    ? `｜その他：${issuesOtherText.value.trim()}`
+    : "";
 
-        return {
-          line_name: form.lineName.value.trim(),
-          sex: form.sex.value,
-          age: form.age.value,
-          height: form.height.value,
-          weight: form.weight.value,
-          current_carb: form.currentCarb.value,
-          rice_sel: form.riceSel.value || "",
-          bread_sel: form.breadSel.value || "",
-          roots_sel: form.rootsSel.value || "",
-          habit: form.habit.value,
-          fitness_type: form.fitnessType.value,
-          goal: form.goal.value,
-          target_weight: form.targetWeight.value || "",
-          issues: issues.join(" / ") + issuesText,
-          meal_morning: form.mealMorning.value.trim(),
-          meal_noon: form.mealNoon.value.trim(),
-          meal_night: form.mealNight.value.trim(),
-          favorite_foods: form.favoriteFoods.value.trim(),
-          snacks_drinks: form.snacksDrinks.value.trim(),
-          eating_out: form.eatingOut.value,
-          sleep_hours: form.sleepHours.value,
-          exercise_feel: form.exerciseFeel.value,
-          stress_level: form.stressLevel.value,
-          current_disease: form.currentDisease.value,
-          current_disease_text: form.currentDiseaseText.value.trim(),
-          past_disease: form.pastDisease.value,
-          past_disease_text: form.pastDiseaseText.value.trim(),
-          medication: form.medication.value,
-          medication_text: form.medicationText.value.trim(),
-          supplement: form.supplement.value,
-          supplement_text: form.supplementText.value.trim(),
-          pregnancy: form.sex.value === "F" ? form.pregnancy.value : "",
-          change_tolerance: form.changeTolerance.value,
-          motivation: form.motivation.value,
-          expectation: form.expectation.value.trim(),
-          selected_slots: [...selectedSlots].join(" / "),
-          submitted_at: new Date().toLocaleString("ja-JP")
-        };
-      };
+  const sexMap = { M: "男性", F: "女性" };
+  const goalMap = { cut: "減量", maintain: "維持", bulk: "増量" };
+  const habitMap = {
+    "1.2": "ほぼ運動しない",
+    "1.375": "週1〜2日",
+    "1.55": "週3〜4日",
+    "1.725": "週5〜6日",
+    "1.9": "毎日/肉体労働"
+  };
+  const fitnessMap = {
+    none: "該当なし",
+    strength: "筋トレ",
+    run: "ランニング",
+    cycle: "サイクリング",
+    club: "部活動",
+    martial: "格闘技",
+    aerobic: "その他（有酸素運動）",
+    anaerobic: "その他（無酸素運動）"
+  };
+  const carbMap = {
+    "under100": "100g以下",
+    "100-150": "100〜150g",
+    "150-200": "150〜200g",
+    "200-250": "200〜250g",
+    "250-300": "250〜300g",
+    "300-400": "300〜400g",
+    "400p": "400g以上",
+    "unknown": "わからない"
+  };
+
+  return {
+    line_name: form.lineName.value.trim(),
+    sex: sexMap[form.sex.value] || form.sex.value,
+    age: form.age.value,
+    height: form.height.value,
+    weight: form.weight.value,
+    current_carb: carbMap[form.currentCarb.value] || form.currentCarb.value,
+    rice_sel: form.riceSel.value || "",
+    bread_sel: form.breadSel.value || "",
+    roots_sel: form.rootsSel.value || "",
+    habit: habitMap[form.habit.value] || form.habit.value,
+    fitness_type: fitnessMap[form.fitnessType.value] || form.fitnessType.value,
+    goal: goalMap[form.goal.value] || form.goal.value,
+    target_weight: form.targetWeight.value || "",
+    issues: issues.join(" / ") + issuesText,
+    meal_morning: form.mealMorning.value.trim(),
+    meal_noon: form.mealNoon.value.trim(),
+    meal_night: form.mealNight.value.trim(),
+    favorite_foods: form.favoriteFoods.value.trim(),
+    snacks_drinks: form.snacksDrinks.value.trim(),
+    eating_out: form.eatingOut.value,
+    sleep_hours: form.sleepHours.value,
+    exercise_feel: form.exerciseFeel.value,
+    stress_level: form.stressLevel.value,
+    current_disease: form.currentDisease.value,
+    current_disease_text: form.currentDiseaseText.value.trim(),
+    past_disease: form.pastDisease.value,
+    past_disease_text: form.pastDiseaseText.value.trim(),
+    medication: form.medication.value,
+    medication_text: form.medicationText.value.trim(),
+    supplement: form.supplement.value,
+    supplement_text: form.supplementText.value.trim(),
+    pregnancy: form.sex.value === "F" ? form.pregnancy.value : "",
+    change_tolerance: form.changeTolerance.value,
+    motivation: form.motivation.value,
+    expectation: form.expectation.value.trim(),
+    selected_slots: [...selectedSlots].join(" / "),
+    submitted_at: new Date().toLocaleString("ja-JP")
+  };
+};
 
       const showThankYouView = () => {
         hero.style.display = "none";
