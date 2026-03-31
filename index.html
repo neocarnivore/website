@@ -1521,8 +1521,8 @@
               }
 
               syncSelectedInput();
-              showError("schedule", selectedSlots.size === 0);
-            });
+              showError("schedule", selectedSlots.size < 2);
+              });
 
             td.appendChild(btn);
             tr.appendChild(td);
