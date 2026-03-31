@@ -61,9 +61,9 @@
     }
 
     .header-inner{
-      max-width:980px;
+      max-width:920px;
       margin:0 auto;
-      padding:14px 16px;
+      padding:16px 18px;
       display:flex;
       align-items:center;
       justify-content:space-between;
@@ -74,7 +74,8 @@
       display:flex;
       align-items:center;
       gap:10px;
-      font-weight:800;
+      font-weight:700;
+      letter-spacing:.02em;
       min-width:0;
     }
 
@@ -96,6 +97,7 @@
       font-size:10px;
       color:var(--muted);
       margin-top:2px;
+      letter-spacing:.02em;
     }
 
     .pill-note{
@@ -113,16 +115,21 @@
     }
 
     .container{
-      max-width:980px;
+      width:100%;
+      max-width:920px;
       margin:0 auto 24px;
-      padding:0 14px;
+      padding:0 4vw;
+    }
+
+    @media (min-width:920px){
+      .container{padding:0 18px;}
     }
 
     .hero{
-      background:linear-gradient(135deg,#fff,#fff 52%,var(--accent-soft));
+      background:linear-gradient(135deg,#ffffff,#ffffff 55%,var(--accent-soft));
       border:1px solid var(--line);
       border-radius:var(--radius-lg);
-      padding:26px 20px 22px;
+      padding:26px 22px 22px;
       box-shadow:var(--shadow);
       position:relative;
       overflow:hidden;
@@ -131,48 +138,56 @@
     .hero::after{
       content:"";
       position:absolute;
-      right:-110px;
-      top:-130px;
+      right:-120px;
+      top:-140px;
       width:320px;
       height:320px;
       border-radius:50%;
-      background:radial-gradient(circle at 30% 30%, rgba(255,138,61,.16), transparent 65%);
+      background:radial-gradient(circle at 30% 30%, rgba(255,138,61,.18), transparent 65%);
       pointer-events:none;
+    }
+
+    .hero-head{
+      display:flex;
+      flex-direction:column;
+      gap:6px;
     }
 
     .hero .meta{
       display:inline-flex;
       align-items:center;
       gap:8px;
-      padding:7px 12px;
+      padding:6px 10px;
       background:rgba(255,241,232,.95);
       border:1px solid rgba(255,138,61,.18);
       border-radius:999px;
       font-size:12px;
       color:var(--accent-2);
-      font-weight:700;
+      font-weight:600;
+      margin-left:-2px;
+      transform:translateY(-2px);
       width:fit-content;
       max-width:100%;
     }
 
     .hero h1{
-      margin:10px 0 8px;
-      font-size:clamp(26px,4.3vw,36px);
-      line-height:1.18;
+      margin:0 0 2px;
+      font-size:clamp(24px,3.6vw,31px);
       letter-spacing:.01em;
+      line-height:1.2;
       white-space:pre-line;
     }
 
     .hero p{
-      margin:0;
+      margin:0 0 6px;
       color:var(--muted);
-      line-height:1.7;
+      line-height:1.6;
       font-size:14px;
       white-space:pre-line;
     }
 
     form{
-      margin-top:14px;
+      margin-top:18px;
       background:var(--card);
       border:1px solid var(--line);
       border-radius:var(--radius-lg);
@@ -181,9 +196,10 @@
     }
 
     .section{
-      padding:18px 18px 8px;
+      padding:18px 22px 6px;
       border-top:1px dashed rgba(0,0,0,.06);
     }
+
     .section:first-child{border-top:none}
 
     .section-title{
@@ -192,16 +208,17 @@
       gap:8px;
       margin:0 0 12px;
       font-size:15px;
-      font-weight:800;
+      font-weight:700;
     }
 
     .section-title .req{
       color:var(--danger);
       font-size:12px;
+      font-weight:700;
     }
 
     .section-sub{
-      margin:-4px 0 12px;
+      margin:-6px 0 12px;
       font-size:12px;
       color:var(--muted);
       line-height:1.6;
@@ -217,26 +234,19 @@
 
     .grid-2{
       display:grid;
-      gap:14px;
+      gap:16px;
       grid-template-columns:1fr;
     }
 
     .grid-3{
       display:grid;
-      gap:14px;
+      gap:16px;
       grid-template-columns:1fr;
     }
 
-    @media(min-width:760px){
-      .grid-2{grid-template-columns:1fr 1fr}
-      .grid-3{grid-template-columns:repeat(3,minmax(0,1fr))}
-    }
-
-    label.inline-label{
-      display:block;
-      font-size:13px;
-      color:var(--muted);
-      margin:0 0 6px;
+    @media (min-width:720px){
+      .grid-2{grid-template-columns:1fr 1fr;}
+      .grid-3{grid-template-columns:repeat(3,minmax(0,1fr));}
     }
 
     input[type="text"],
@@ -250,12 +260,12 @@
       font-size:16px;
       outline:none;
       background:#fff;
-      max-width:100%;
       transition:border .15s ease, box-shadow .15s ease, background .15s ease;
+      max-width:100%;
     }
 
     textarea{
-      min-height:112px;
+      min-height:110px;
       resize:vertical;
     }
 
@@ -272,10 +282,11 @@
       background:#fffdfa;
     }
 
-    .hint{
-      font-size:11.5px;
+    .inline-label{
+      display:block;
+      font-size:13px;
       color:var(--muted);
-      line-height:1.55;
+      margin:0 0 6px;
     }
 
     .checks{
@@ -284,8 +295,8 @@
       grid-template-columns:1fr 1fr;
     }
 
-    @media(min-width:760px){
-      .checks{grid-template-columns:repeat(3,minmax(0,1fr))}
+    @media (min-width:720px){
+      .checks{grid-template-columns:repeat(3,minmax(0,1fr));}
     }
 
     .check-item{
@@ -340,8 +351,8 @@
       grid-template-columns:1fr;
     }
 
-    @media(min-width:760px){
-      .planner-pair{grid-template-columns:1fr 1fr}
+    @media (min-width:760px){
+      .planner-pair{grid-template-columns:1fr 1fr;}
     }
 
     .seg{
@@ -371,11 +382,53 @@
       border-color:transparent;
     }
 
-    .error{
-      color:var(--danger);
+    .hint{
       font-size:11.5px;
+      color:var(--muted);
+      line-height:1.55;
+    }
+
+    .meal-split{
+      display:grid;
+      gap:12px;
+      grid-template-columns:1fr;
+      margin-top:-2px;
+    }
+
+    @media (min-width:720px){
+      .meal-split{grid-template-columns:repeat(3,minmax(0,1fr));}
+    }
+
+    .meal-mini{
+      border:1px solid var(--line);
+      border-radius:12px;
+      padding:12px;
+      background:#fff;
+    }
+
+    .meal-mini-head{
+      display:flex;
+      align-items:center;
+      gap:8px;
+      margin-bottom:8px;
+      font-size:13px;
       font-weight:700;
-      display:none;
+      color:var(--muted);
+    }
+
+    .meal-emoji{
+      width:24px;
+      height:24px;
+      display:grid;
+      place-items:center;
+      border-radius:999px;
+      background:rgba(255,138,61,.10);
+      font-size:13px;
+      flex:0 0 24px;
+    }
+
+    .meal-mini input{
+      margin:0;
     }
 
     .schedule-card{
@@ -394,27 +447,17 @@
     }
 
     .schedule-scroll{
-      overflow-x:hidden;
+      overflow-x:auto;
+      overflow-y:hidden;
+      -webkit-overflow-scrolling:touch;
       background:#fff;
       width:100%;
       max-width:100%;
     }
 
-    .container,
-    .hero,
-    form,
-    .section,
-    .planner-shell,
-    .planner-card,
-    .planner-pair,
-    .field,
-    .schedule-card,
-    .schedule-wrap{
-      min-width:0;
-    }
-
     table.schedule{
       width:100%;
+      min-width:640px;
       border-collapse:collapse;
       table-layout:fixed;
       font-variant-numeric:tabular-nums;
@@ -431,7 +474,7 @@
 
     .th-time,
     .td-time{
-      width:56px;
+      width:58px;
       background:var(--sched-head);
       font-size:12px;
       font-weight:900;
@@ -444,6 +487,7 @@
       font-weight:900;
       color:#111827;
       height:42px;
+      line-height:1.2;
     }
 
     .time-label{
@@ -523,10 +567,11 @@
 
     .schedule-inline-msg{
       font-size:11.5px;
-      font-weight:800;
+      font-weight:700;
       display:none;
       margin-top:10px;
       color:#556070;
+      white-space:pre-line;
     }
 
     .schedule-inline-msg.is-error{
@@ -534,7 +579,7 @@
     }
 
     .actions{
-      padding:18px 18px 22px;
+      padding:18px 22px 22px;
       display:grid;
       gap:10px;
     }
@@ -544,7 +589,7 @@
       border-radius:14px;
       padding:14px 14px;
       font-size:16px;
-      font-weight:800;
+      font-weight:700;
       cursor:pointer;
       transition:transform .08s ease, filter .15s ease, box-shadow .15s ease;
     }
@@ -558,15 +603,16 @@
     .btn-primary:hover{filter:brightness(1.02)}
     .btn-primary:active{transform:translateY(1px)}
 
-    .btn-ghost{
-      background:#fff;
-      border:1px solid var(--line);
-      color:#111827;
+    .error{
+      color:var(--danger);
+      font-size:11.5px;
+      font-weight:600;
+      display:none;
     }
 
     .thankyou-stage{
       position:relative;
-      min-height:56vh;
+      min-height:62vh;
       display:none;
       justify-content:center;
       align-items:flex-start;
@@ -576,7 +622,7 @@
     .thankyou{
       width:100%;
       margin-top:10px;
-      background:linear-gradient(135deg,#fff,#fff 55%,var(--accent-soft));
+      background:linear-gradient(135deg,#ffffff,#ffffff 55%,var(--accent-soft));
       border:1px solid var(--line);
       border-radius:var(--radius-lg);
       padding:34px 22px 26px;
@@ -598,7 +644,7 @@
 
     .done-kicker{
       font-size:11.5px;
-      font-weight:800;
+      font-weight:700;
       color:var(--accent-2);
       letter-spacing:.08em;
       margin-bottom:2px;
@@ -607,14 +653,15 @@
     .thankyou h2{
       margin:0 0 12px;
       font-size:clamp(22px,3.2vw,26px);
+      letter-spacing:.01em;
     }
 
     .thankyou-secondary{
       font-size:12.5px;
       color:#556070;
-      font-weight:700;
-      line-height:1.7;
+      font-weight:600;
       margin:0;
+      line-height:1.7;
     }
 
     footer{
@@ -625,6 +672,7 @@
     }
 
     .admin-bar{display:none;margin-top:10px}
+
     .admin-btn{
       background:#111827;
       color:#fff;
@@ -636,28 +684,14 @@
       cursor:pointer;
     }
 
-    @media (max-width:520px){
+    @media (max-width:560px){
       .header-inner{
-        padding:12px 14px;
-        gap:10px;
+        padding:14px;
+        gap:8px;
       }
 
       .brand{
         gap:8px;
-      }
-
-      .brand > div:last-child{
-        min-width:0;
-      }
-
-      .brand > div:last-child div{
-        font-size:12px;
-        line-height:1.25;
-        word-break:break-word;
-      }
-
-      .brand-license{
-        font-size:9px;
       }
 
       .pill-note{
@@ -673,18 +707,8 @@
         padding:22px 16px 18px;
       }
 
-      .hero h1{
-        font-size:clamp(22px,8vw,30px);
-        line-height:1.22;
-      }
-
-      .hero p{
-        font-size:13px;
-        line-height:1.65;
-      }
-
       .section{
-        padding:16px 14px 8px;
+        padding:16px 14px 6px;
       }
 
       .planner-card{
@@ -692,46 +716,20 @@
       }
 
       .checks{
-        grid-template-columns:1fr;
-      }
-
-      .seg{
-        grid-template-columns:1fr;
-      }
-
-      .seg.seg-two{
         grid-template-columns:1fr 1fr;
       }
 
       .th-time,
       .td-time{
-        width:46px;
-        font-size:10px;
+        width:50px;
       }
 
       .th-date{
-        font-size:10px;
-        height:38px;
+        font-size:11px;
       }
 
       .time-label{
-        font-size:10px;
-        padding:10px 0;
-      }
-
-      .slot-cell,
-      .slot-btn{
-        height:40px;
-      }
-
-      .slot-btn .circle{
-        width:16px;
-        height:16px;
-      }
-
-      .slot-btn .check{
-        width:18px;
-        height:18px;
+        font-size:11px;
       }
     }
   </style>
@@ -747,17 +745,19 @@
             <span class="brand-license">ねおカーニボア</span>
           </div>
         </div>
-        <div class="pill-note">約2分で入力</div>
+        <div class="pill-note">第1回ミーティング</div>
       </div>
     </header>
 
     <main class="container">
       <section class="hero" id="heroSection">
-        <span class="meta">以下の項目にご回答ください</span>
-        <h1>かんたん2分入力で
+        <div class="hero-head">
+          <span class="meta">肉食コーチング 回答フォーム</span>
+          <h1>かんたん2分入力で
 コーチングをスタート</h1>
-        <p>各項目をご入力後、内容を確認のうえ、
+          <p>各項目をご入力後、内容を確認のうえ、
 ねおより公式LINEにてご連絡します</p>
+        </div>
       </section>
 
       <div class="thankyou-stage" id="thankYouStage">
@@ -798,18 +798,18 @@
                   </div>
                   <div class="field">
                     <label class="inline-label">年齢</label>
-                    <input id="age" name="age" type="number" min="12" max="99" placeholder="例：30" required />
+                    <input id="age" name="age" type="number" inputmode="decimal" step="0.1" min="12" max="99" placeholder="例：30" required />
                   </div>
                 </div>
 
                 <div class="planner-pair">
                   <div class="field">
                     <label class="inline-label">身長（cm）</label>
-                    <input id="height" name="height" type="number" min="120" max="220" placeholder="例：170" required />
+                    <input id="height" name="height" type="number" inputmode="decimal" step="0.1" min="120" max="220" placeholder="例：170" required />
                   </div>
                   <div class="field">
                     <label class="inline-label">体重（kg）</label>
-                    <input id="weight" name="weight" type="number" min="30" max="250" placeholder="例：65" required />
+                    <input id="weight" name="weight" type="number" inputmode="decimal" step="0.1" min="30" max="250" placeholder="例：65" required />
                   </div>
                 </div>
 
@@ -852,7 +852,7 @@
                     </div>
                   </div>
 
-                  <div class="field" id="rootsWrap">
+                  <div class="field">
                     <label class="inline-label">1日に根菜を食べる量</label>
                     <select id="rootsSel" name="rootsSel">
                       <option value="">選択してください</option>
@@ -905,7 +905,7 @@
 
                   <div class="field" id="targetWeightWrap" style="display:none;">
                     <label class="inline-label">目標体重（kg）</label>
-                    <input id="targetWeight" name="targetWeight" type="number" min="30" max="250" placeholder="例：60" />
+                    <input id="targetWeight" name="targetWeight" type="number" inputmode="decimal" step="0.1" min="30" max="250" />
                   </div>
                 </div>
               </div>
@@ -913,7 +913,6 @@
           </div>
 
           <div class="error" data-error-for="planner">基本情報を入力してください。</div>
-          <div class="error" data-error-for="lineName">LINEプロフィール名を入力してください。</div>
         </div>
 
         <div class="section">
@@ -921,17 +920,17 @@
           <div class="section-sub">複数選択可</div>
 
           <div class="checks">
-            <label class="check-item"><input type="checkbox" name="issues" value="だるさ">だるさ</label>
-            <label class="check-item"><input type="checkbox" name="issues" value="太りやすい">太りやすい</label>
-            <label class="check-item"><input type="checkbox" name="issues" value="集中力">集中力</label>
-            <label class="check-item"><input type="checkbox" name="issues" value="肌荒れ">肌荒れ</label>
-            <label class="check-item"><input type="checkbox" name="issues" value="メンタル">メンタル</label>
-            <label class="check-item"><input type="checkbox" id="issuesOtherChk" name="issues" value="その他">その他</label>
+            <label class="check-item"><input type="checkbox" name="issues" value="だるさ" />だるさ</label>
+            <label class="check-item"><input type="checkbox" name="issues" value="太りやすい" />太りやすい</label>
+            <label class="check-item"><input type="checkbox" name="issues" value="集中力" />集中力</label>
+            <label class="check-item"><input type="checkbox" name="issues" value="肌荒れ" />肌荒れ</label>
+            <label class="check-item"><input type="checkbox" name="issues" value="メンタル" />メンタル</label>
+            <label class="check-item"><input type="checkbox" id="issuesOtherChk" name="issues" value="その他" />その他</label>
           </div>
 
           <div class="field" id="issuesOtherWrap" style="display:none;margin-top:12px;">
-            <label class="inline-label">その他の悩み</label>
-            <textarea id="issuesOtherText" name="issuesOtherText" placeholder="自由記述"></textarea>
+            <label class="inline-label">具体的に記述してください</label>
+            <textarea id="issuesOtherText" name="issuesOtherText" placeholder="具体的に記述してください"></textarea>
           </div>
 
           <div class="error" data-error-for="issues">悩みを1つ以上選択してください。</div>
@@ -943,7 +942,20 @@
           <div class="grid-2">
             <div class="field">
               <label class="inline-label">1日の食事内容（ざっくり）</label>
-              <textarea id="dailyMeals" name="dailyMeals" required placeholder="例：肉中心、外食多め、甘いものを毎日食べる など"></textarea>
+              <div class="meal-split">
+                <div class="meal-mini">
+                  <div class="meal-mini-head"><span class="meal-emoji">🌅</span><span>朝</span></div>
+                  <input id="mealMorning" name="mealMorning" type="text" placeholder="例：卵とコーヒー" />
+                </div>
+                <div class="meal-mini">
+                  <div class="meal-mini-head"><span class="meal-emoji">☀️</span><span>昼</span></div>
+                  <input id="mealNoon" name="mealNoon" type="text" placeholder="例：外食で丼もの" />
+                </div>
+                <div class="meal-mini">
+                  <div class="meal-mini-head"><span class="meal-emoji">🌙</span><span>夜</span></div>
+                  <input id="mealNight" name="mealNight" type="text" placeholder="例：肉料理とご飯" />
+                </div>
+              </div>
               <div class="error" data-error-for="dailyMeals">1日の食事内容を入力してください。</div>
             </div>
 
@@ -951,21 +963,6 @@
               <label class="inline-label">よく食べるもの</label>
               <textarea id="favoriteFoods" name="favoriteFoods" required placeholder="例：ラーメン、アイス、ヨーグルト、鶏胸肉 など"></textarea>
               <div class="error" data-error-for="favoriteFoods">よく食べるものを入力してください。</div>
-            </div>
-          </div>
-
-          <div class="grid-3">
-            <div class="field">
-              <label class="inline-label">朝</label>
-              <input id="mealMorning" name="mealMorning" type="text" placeholder="例：卵とコーヒー" />
-            </div>
-            <div class="field">
-              <label class="inline-label">昼</label>
-              <input id="mealNoon" name="mealNoon" type="text" placeholder="例：外食で丼もの" />
-            </div>
-            <div class="field">
-              <label class="inline-label">夜</label>
-              <input id="mealNight" name="mealNight" type="text" placeholder="例：肉料理とご飯" />
             </div>
           </div>
 
@@ -1011,9 +1008,9 @@
               <select id="exerciseFeel" name="exerciseFeel" required>
                 <option value="">選択してください</option>
                 <option>ほぼ動かない</option>
-                <option>少し動く</option>
-                <option>普通に動く</option>
-                <option>激しく動く</option>
+                <option>低い</option>
+                <option>普通</option>
+                <option>高い</option>
               </select>
             </div>
 
@@ -1047,8 +1044,8 @@
             </div>
 
             <div class="field" id="currentDiseaseTextWrap" style="display:none;">
-              <label class="inline-label">疾患名</label>
-              <textarea id="currentDiseaseText" name="currentDiseaseText" placeholder="自由記述"></textarea>
+              <label class="inline-label">具体的に記述してください</label>
+              <textarea id="currentDiseaseText" name="currentDiseaseText" placeholder="具体的に記述してください"></textarea>
             </div>
           </div>
 
@@ -1063,8 +1060,8 @@
             </div>
 
             <div class="field" id="pastDiseaseTextWrap" style="display:none;">
-              <label class="inline-label">疾患名</label>
-              <textarea id="pastDiseaseText" name="pastDiseaseText" placeholder="自由記述"></textarea>
+              <label class="inline-label">具体的に記述してください</label>
+              <textarea id="pastDiseaseText" name="pastDiseaseText" placeholder="具体的に記述してください"></textarea>
             </div>
           </div>
 
@@ -1079,8 +1076,8 @@
             </div>
 
             <div class="field" id="medicationTextWrap" style="display:none;">
-              <label class="inline-label">薬の名前</label>
-              <textarea id="medicationText" name="medicationText" placeholder="自由記述"></textarea>
+              <label class="inline-label">具体的に記述してください</label>
+              <textarea id="medicationText" name="medicationText" placeholder="具体的に記述してください"></textarea>
             </div>
           </div>
 
@@ -1095,8 +1092,8 @@
             </div>
 
             <div class="field" id="supplementTextWrap" style="display:none;">
-              <label class="inline-label">サプリ名</label>
-              <textarea id="supplementText" name="supplementText" placeholder="自由記述"></textarea>
+              <label class="inline-label">具体的に記述してください</label>
+              <textarea id="supplementText" name="supplementText" placeholder="具体的に記述してください"></textarea>
             </div>
           </div>
 
@@ -1141,14 +1138,15 @@
 
           <div class="field">
             <label class="inline-label">期待すること</label>
-            <textarea id="expectation" name="expectation" required placeholder="例：健康になりたい、体重を落としたい、集中力を上げたい、美容のため"></textarea>
+            <textarea id="expectation" name="expectation" required placeholder="例：健康になりたい、体重を落としたい、集中力を上げたい、美容のために"></textarea>
             <div class="error" data-error-for="expectation">期待することを入力してください。</div>
           </div>
         </div>
 
         <div class="section">
           <div class="section-title">初回ミーティング希望日時 <span class="req">必須</span></div>
-          <div class="section-sub">1枠あたり30分ほどのzoomミーティング。最大3枠まで選択でき、確認のうえ最終日時を決定します。</div>
+          <div class="section-sub">1枠あたり30分ほどのzoomミーティング。
+最大3枠まで選択でき、内容を確認のうえ最終日時を決定します。</div>
 
           <div class="schedule-card">
             <div class="schedule-wrap">
@@ -1171,7 +1169,7 @@
           <div class="section-title">利用規約 <span class="req">必須</span></div>
           <div class="checks" style="grid-template-columns:1fr;">
             <label class="check-item">
-              <input type="checkbox" id="agreeTerms" name="agreeTerms" value="yes">
+              <input type="checkbox" id="agreeTerms" name="agreeTerms" value="yes" />
               <a href="https://neocarnivore.myshopify.com/policies/terms-of-service" target="_blank" rel="noopener" style="color:var(--accent-2);font-weight:700;text-decoration:underline;">利用規約</a> を確認し、自己責任で取り組むことに同意します
             </label>
           </div>
@@ -1179,14 +1177,13 @@
         </div>
 
         <div class="actions">
-          <button class="btn btn-primary" type="submit">診断を送信する</button>
-          <button class="btn btn-ghost" type="reset">入力をリセット</button>
+          <button class="btn btn-primary" type="submit">回答を送信</button>
           <div id="formMsg" class="hint"></div>
         </div>
       </form>
     </main>
 
-    <footer>GitHubにこのHTMLをそのまま置いて動かせる単一ファイルです。送信処理は EmailJS 前提です。</footer>
+    <footer></footer>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
@@ -1333,11 +1330,9 @@
         return 7;
       };
 
-      const now = new Date();
-      const todayKey = dayKey(now);
-      const tomorrowKey = dayKey(addDays(startOfDay(now), 1));
-      const DAYS = calcDaysCount();
-      const days = Array.from({length: DAYS}, (_, i) => startOfDay(addDays(now, i)));
+      let DAYS = calcDaysCount();
+      let now = new Date();
+      let days = Array.from({length: DAYS}, (_, i) => startOfDay(addDays(now, i)));
       const times = buildTimeList("10:30", "18:30", 30);
 
       const selectedSlots = new Set();
@@ -1359,9 +1354,13 @@
         selectedSlotsInput.value = JSON.stringify([...selectedSlots]);
       };
 
-      const slotId = (dateKey, hhmm) => `${dateKey} ${hhmm}`;
+      const slotId = (dateKeyValue, hhmm) => `${dateKeyValue} ${hhmm}`;
 
       const isDisabledByRule = (dateKeyValue, timeLabel) => {
+        const baseNow = new Date();
+        const todayKey = dayKey(baseNow);
+        const tomorrowKey = dayKey(addDays(startOfDay(baseNow), 1));
+
         if (dateKeyValue === todayKey) return true;
 
         const {h, m} = parseHHMM(timeLabel);
@@ -1374,6 +1373,10 @@
       };
 
       const renderSchedule = () => {
+        DAYS = calcDaysCount();
+        now = new Date();
+        days = Array.from({length: DAYS}, (_, i) => startOfDay(addDays(now, i)));
+
         scheduleTable.innerHTML = "";
 
         const thead = document.createElement("thead");
@@ -1387,7 +1390,7 @@
         days.forEach(d => {
           const th = document.createElement("th");
           th.className = "th-date";
-          th.textContent = fmtMD(d);
+          th.innerHTML = `${fmtMD(d)}`;
           trh.appendChild(th);
         });
 
@@ -1491,7 +1494,7 @@
       renderSchedule();
 
       const validatePlanner = () => {
-        const ids = ["sex","age","height","weight","currentCarb","habit","fitnessType","goal"];
+        const ids = ["sex","age","height","weight","currentCarb","habit","fitnessType","goal","lineName"];
         for (const id of ids) {
           const el = document.getElementById(id);
           if (!el || !String(el.value || "").trim()) return false;
@@ -1512,10 +1515,7 @@
       };
 
       const validateConfirmation = () => {
-        const required = [
-          "currentDisease","pastDisease","medication","supplement"
-        ];
-
+        const required = ["currentDisease","pastDisease","medication","supplement"];
         for (const id of required) {
           if (!document.getElementById(id).value.trim()) return false;
         }
@@ -1524,24 +1524,26 @@
         if (form.pastDisease.value === "はい" && !form.pastDiseaseText.value.trim()) return false;
         if (form.medication.value === "はい" && !form.medicationText.value.trim()) return false;
         if (form.supplement.value === "はい" && !form.supplementText.value.trim()) return false;
-
         if (form.sex.value === "F" && !form.pregnancy.value.trim()) return false;
 
         return true;
+      };
+
+      const validateMeals = () => {
+        return Boolean(
+          form.mealMorning.value.trim() ||
+          form.mealNoon.value.trim() ||
+          form.mealNight.value.trim()
+        );
       };
 
       const validateAll = () => {
         let ok = true;
 
         [
-          "lineName","planner","issues","dailyMeals","favoriteFoods","snacksDrinks",
+          "planner","issues","dailyMeals","favoriteFoods","snacksDrinks",
           "eatingOut","lifestyle","confirmation","expectation","schedule","agreement"
         ].forEach(k => showError(k, false));
-
-        if (!form.lineName.value.trim()) {
-          showError("lineName", true);
-          ok = false;
-        }
 
         if (!validatePlanner()) {
           showError("planner", true);
@@ -1558,7 +1560,7 @@
           ok = false;
         }
 
-        if (!form.dailyMeals.value.trim()) {
+        if (!validateMeals()) {
           showError("dailyMeals", true);
           ok = false;
         }
@@ -1630,7 +1632,6 @@
           goal: form.goal.value,
           target_weight: form.targetWeight.value || "",
           issues: issues.join(" / ") + issuesText,
-          daily_meals: form.dailyMeals.value.trim(),
           meal_morning: form.mealMorning.value.trim(),
           meal_noon: form.mealNoon.value.trim(),
           meal_night: form.mealNight.value.trim(),
@@ -1715,67 +1716,13 @@
         }
       });
 
-      form.addEventListener("reset", () => {
-        [
-          "lineName","planner","issues","dailyMeals","favoriteFoods","snacksDrinks",
-          "eatingOut","lifestyle","confirmation","expectation","schedule","agreement"
-        ].forEach(k => showError(k, false));
-
-        msg.textContent = "";
-        showInlineMsg("");
-
-        selectedSlots.clear();
-        syncSelectedInput();
-
-        unknownCarbWrap.style.display = "none";
-        issuesOtherWrap.style.display = "none";
-        targetWeightWrap.style.display = "none";
-
-        document.getElementById("goal").value = "maintain";
-        document.getElementById("changeTolerance").value = "徐々に変えたい";
-        document.getElementById("motivation").value = "変わりたい";
-        document.getElementById("currentDisease").value = "いいえ";
-        document.getElementById("pastDisease").value = "いいえ";
-        document.getElementById("medication").value = "いいえ";
-        document.getElementById("supplement").value = "いいえ";
-        document.getElementById("pregnancy").value = "いいえ";
-
-        [
-          "#goalSeg button",
-          "#changeSeg button",
-          "#motivationSeg button",
-          "#currentDiseaseSeg button",
-          "#pastDiseaseSeg button",
-          "#medicationSeg button",
-          "#supplementSeg button",
-          "#pregnancySeg button"
-        ].forEach(selector => {
-          document.querySelectorAll(selector).forEach((b, i) => {
-            b.classList.toggle("active", i === (selector === "#goalSeg button" || selector === "#changeSeg button" || selector === "#motivationSeg button" ? 1 : 0));
-          });
-        });
-
-        [
-          "currentDiseaseTextWrap",
-          "pastDiseaseTextWrap",
-          "medicationTextWrap",
-          "supplementTextWrap"
-        ].forEach(id => {
-          document.getElementById(id).style.display = "none";
-        });
-
-        setTimeout(() => {
-          renderSchedule();
-          syncOtherIssue();
-          syncSexDependentUi();
-        }, 0);
-      });
-
-      form.lineName.addEventListener("input", () => showError("lineName", false));
-      form.dailyMeals.addEventListener("input", () => showError("dailyMeals", false));
+      form.lineName.addEventListener("input", () => showError("planner", false));
       form.favoriteFoods.addEventListener("input", () => showError("favoriteFoods", false));
       form.snacksDrinks.addEventListener("input", () => showError("snacksDrinks", false));
       form.expectation.addEventListener("input", () => showError("expectation", false));
+      form.mealMorning.addEventListener("input", () => showError("dailyMeals", false));
+      form.mealNoon.addEventListener("input", () => showError("dailyMeals", false));
+      form.mealNight.addEventListener("input", () => showError("dailyMeals", false));
 
       document.querySelectorAll('input[name="issues"]').forEach(el =>
         el.addEventListener("change", () => showError("issues", false))
