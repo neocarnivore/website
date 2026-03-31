@@ -1409,6 +1409,8 @@
   const baseNow = new Date();
   const todayKey = dayKey(baseNow);
   const tomorrowKey = dayKey(addDays(startOfDay(baseNow), 1));
+  const fourDaysLaterKey = dayKey(addDays(startOfDay(baseNow), 4));
+  const fiveDaysLaterKey = dayKey(addDays(startOfDay(baseNow), 5));
 
   if (dateKeyValue === todayKey) return true;
 
@@ -1418,6 +1420,15 @@
   if (dateKeyValue === tomorrowKey && (totalMin <= 12 * 60 || totalMin >= 17 * 60)) {
     return true;
   }
+
+  if ((dateKeyValue === todayKey || dateKeyValue === fiveDaysLaterKey) && totalMin === 10 * 60 + 30) {
+    return true;
+  }
+
+  if (dateKeyValue === fourDaysLaterKey && totalMin >= 17 * 60 + 30) {
+    return true;
+  }
+
   return false;
 };
 
