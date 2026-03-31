@@ -1,24 +1,57 @@
-const CACHE = "carnivore-planner-v1";
+const CACHE_NAME = "carnivore-coaching-form-v1";
+const BASE = "/";
+
 const ASSETS = [
-  "./",
-  "./index.html",
-  "./manifest.webmanifest"
+  BASE,
+  BASE + "index.html",
+  BASE + "manifest.webmanifest"
 ];
 
-self.addEventListener("install", e => {
-  e.waitUntil(caches.open(CACHE).then(c => c.addAll(ASSETS)));
-});
-
-self.addEventListener("activate", e => {
-  e.waitUntil(
-    caches.keys().then(keys =>
-      Promise.all(keys.filter(k => k !== CACHE).map(k => caches.delete(k)))
-    )
+self.addEventListener("install", (event) => {
+  self.skipWaiting();
+  event.waitUntil(
+    caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS))
   );
 });
 
-self.addEventListener("fetch", e => {
-  e.respondWith(
-    caches.match(e.request).then(res => res || fetch(e.request))
+self.addEventListener("activate", (event) => {
+  event.waitUntil(
+    Promise.all([
+      caches.keys().then((keys) =>
+        Promise.all(
+          keys.map((key) => (key !== CACHE_NAME ? caches.delete(key) : null))
+        )
+      ),
+      self.clients.claim()
+    ])
+  );
+});
+
+self.addEventListener("fetch", (event) => {
+  const req = event.request;
+  const url = new URL(req.url);
+
+  if (req.method !== "GET") return;
+
+  if (!url.pathname.startsWith(BASE)) return;
+
+  if (req.mode === "navigate" || req.destination === "document") {
+    event.respondWith(
+      fetch(req).catch(() => caches.match(BASE + "index.html"))
+    );
+    return;
+  }
+
+  event.respondWith(
+    caches.match(req).then((cached) => {
+      return (
+        cached ||
+        fetch(req).then((res) => {
+          const clone = res.clone();
+          caches.open(CACHE_NAME).then((cache) => cache.put(req, clone));
+          return res;
+        })
+      );
+    })
   );
 });
