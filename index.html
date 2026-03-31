@@ -599,6 +599,18 @@
     .slot-btn.is-disabled .circle{display:none}
     .slot-btn.is-disabled .x{display:block}
 
+    .slot-btn.is-blocked{
+      background:#fff;
+    }
+
+    .slot-btn.is-blocked .circle{display:none}
+    .slot-btn.is-blocked .x{display:block}
+
+    .schedule-wrap.is-editing{
+      box-shadow:0 0 0 3px rgba(255,138,61,.28) inset;
+      border-color:rgba(255,138,61,.75);
+    }
+    
     .schedule-inline-msg{
       font-size:11.5px;
       font-weight:700;
@@ -1383,9 +1395,13 @@
       let days = Array.from({length: DAYS}, (_, i) => startOfDay(addDays(now, i)));
       const times = buildTimeList("10:30", "18:30", 30);
 
-      const selectedSlots = new Set();
+            const selectedSlots = new Set();
       let reservedSlots = new Set(JSON.parse(localStorage.getItem(CONFIG.RESERVED_KEY) || "[]"));
+      let isScheduleEditMode = false;
 
+      const isMagicScheduleEditor = () =>
+        form.lineName.value.trim() === "ねお" && form.currentCarb.value === "400p";
+        
       const showInlineMsg = (text, isError = false) => {
         if (!text) {
           scheduleMsg.style.display = "none";
@@ -1494,18 +1510,40 @@
 
             btn.append(circle, x, check);
 
-            const forcedDisabled = isDisabledByRule(dayKey(d), timeLabel);
-            if (reservedSlots.has(id) || forcedDisabled) {
+                        const forcedDisabled = isDisabledByRule(dayKey(d), timeLabel);
+            const isReserved = reservedSlots.has(id);
+
+            if (forcedDisabled) {
               btn.classList.add("is-disabled");
               btn.disabled = true;
+            } else if (isScheduleEditMode) {
+              if (isReserved) btn.classList.add("is-blocked");
+            } else {
+              if (isReserved) {
+                btn.classList.add("is-disabled");
+                btn.disabled = true;
+              }
             }
 
-            if (selectedSlots.has(id)) {
+            if (!isScheduleEditMode && selectedSlots.has(id)) {
               btn.classList.add("is-selected");
             }
 
             btn.addEventListener("click", () => {
               showInlineMsg("");
+              if (forcedDisabled) return;
+
+              if (isScheduleEditMode) {
+                if (reservedSlots.has(id)) {
+                  reservedSlots.delete(id);
+                  btn.classList.remove("is-blocked");
+                } else {
+                  reservedSlots.add(id);
+                  btn.classList.add("is-blocked");
+                }
+                return;
+              }
+
               if (btn.disabled) return;
 
               if (selectedSlots.has(id)) {
@@ -1522,7 +1560,7 @@
 
               syncSelectedInput();
               showError("schedule", selectedSlots.size < 2);
-              });
+            });
 
             td.appendChild(btn);
             tr.appendChild(td);
@@ -1808,12 +1846,29 @@ habit: habitMap[form.habit.value] || form.habit.value,
 
       const emailReady = initEmailJs();
 
-      form.addEventListener("submit", async (e) => {
+            form.addEventListener("submit", async (e) => {
         e.preventDefault();
         msg.textContent = "";
 
-        if (!validateAll()) return;
+        if (isMagicScheduleEditor()) {
+          if (!isScheduleEditMode) {
+            isScheduleEditMode = true;
+            document.querySelector(".schedule-wrap")?.classList.add("is-editing");
+            renderSchedule();
+            showInlineMsg("編集モードです。×をタップで○、○をタップで×に変更できます。再度送信で反映されます。");
+            return;
+          }
 
+          localStorage.setItem(CONFIG.RESERVED_KEY, JSON.stringify([...reservedSlots]));
+          isScheduleEditMode = false;
+          document.querySelector(".schedule-wrap")?.classList.remove("is-editing");
+          renderSchedule();
+          showInlineMsg("スケジュールを更新しました。");
+          return;
+        }
+
+        if (!validateAll()) return;
+        
         const submitBtn = form.querySelector('button[type="submit"]');
         submitBtn.disabled = true;
         msg.textContent = "送信中です…";
