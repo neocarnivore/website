@@ -1399,8 +1399,27 @@
       let reservedSlots = new Set(JSON.parse(localStorage.getItem(CONFIG.RESERVED_KEY) || "[]"));
       let isScheduleEditMode = false;
 
-      const isMagicScheduleEditor = () =>
-        form.lineName.value.trim() === "ねお" && form.currentCarb.value === "400p";
+      const isMagicScheduleEditor = () => {
+  const name = (form.lineName.value || "").trim();
+  const carb = form.currentCarb.value;
+
+  return (
+    name === "ねお" &&
+    carb === "400p" &&
+
+    !form.sex.value &&
+    !form.age.value.trim() &&
+    !form.height.value.trim() &&
+    !form.weight.value.trim() &&
+    !form.riceSel.value &&
+    !form.breadSel.value &&
+    !form.rootsSel.value &&
+    !form.habit.value &&
+    !form.fitnessType.value &&
+    form.goal.value === "maintain" &&
+    !form.targetWeight.value.trim()
+  );
+};
         
       const showInlineMsg = (text, isError = false) => {
         if (!text) {
